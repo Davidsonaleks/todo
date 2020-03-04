@@ -6,14 +6,15 @@
   "author": "davidson <davidovich0895@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "webpack": "TS_NODE_PROJECT=\"tsconfig.json\" webpack --config ./webpack.config.ts",
+    "build:prod": "TS_NODE_PROJECT=\"tsconfig.json\" webpack --config ./webpack.config.ts",
     "wds": "TS_NODE_PROJECT=\"tsconfig.json\" webpack-dev-server --config ./webpack.config.ts",
-    "start": "NODE_ENV=production ts-node -r dotenv/config ./src/server.ts",
-    "test": "ts-node -r dotenv/config src/app.ts",
-    "test2": "node -r dotenv/config dist/web.js"
+    "start": "ts-node -r dotenv/config ./src/server.ts"
   },
   "devDependencies": {
     "@types/koa": "^2.11.2",
+    "@types/react": "^16.9.23",
+    "@types/react-router": "^5.1.4",
+    "@types/react-router-dom": "^5.1.3",
     "@types/webpack": "^4.41.7",
     "@types/webpack-dev-server": "^3.10.0",
     "source-map-loader": "^0.2.4",
@@ -25,7 +26,15 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "@types/react-dom": "^16.9.5",
+    "chyk": "^0.9.1",
     "dotenv": "^8.2.0",
-    "koa": "^2.11.0"
+    "history": "^4.10.1",
+    "koa": "^2.11.0",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-router": "^5.1.2",
+    "react-router-config": "^5.1.1",
+    "react-router-dom": "^5.1.2"
   }
 }

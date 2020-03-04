@@ -14,7 +14,7 @@ interface TWebpackProps extends Configuration {
 
 const config: TWebpackProps = {
   entry: {
-    web: "./src/app.ts",
+    web: "./src/browser.ts",
   },
   output: {
     filename: `[name].js`,
