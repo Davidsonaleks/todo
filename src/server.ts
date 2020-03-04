@@ -1,19 +1,19 @@
-require("dotenv").config();
-import Koa, { Middleware } from "koa";
+require("dotenv").config()
+import Koa, { Middleware } from "koa"
 
-const { WDS_PORT, PORT } = process.env;
-const web_port = Number(PORT);
-const server = new Koa();
+const { WDS_PORT, PORT } = process.env
+const web_port = Number(PORT)
+const server = new Koa()
 
 const spa_middleware: Middleware = async (ctx, next) => {
-  ctx.body = template();
-  await next();
-};
+  ctx.body = template()
+  await next()
+}
 
-server.use(spa_middleware);
+server.use(spa_middleware)
 server.listen(web_port, () => {
-  console.log("🚀 Web Server started", "http://localhost:" + web_port);
-});
+  console.log("🚀 Web Server started", "http://localhost:" + web_port)
+})
 
 const template = () => `
 <!DOCTYPE html>
@@ -28,9 +28,7 @@ const template = () => `
 <body>
   <div id="app"</div>
 
-  <script src="${
-    WDS_PORT ? `http://localhost:${WDS_PORT}/dist/web.js` : "/dist/web.js"
-  }"></script>
+  <script src="${WDS_PORT ? `http://localhost:${WDS_PORT}/dist/web.js` : "/dist/web.js"}"></script>
   </body>
   </html>
-  `;
+  `
