@@ -1,0 +1,8 @@
+{
+  "name": "clear_project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@gitlab.com:davidovich0895/clear_project.git",
+  "author": "davidson <davidovich0895@gmail.com>",
+  "license": "MIT"
+}
