@@ -1,5 +1,15 @@
-import React, { FC } from "react"
+import React, { FC, useState } from "react"
 
 export const Home: FC = () => {
-  return <div>home</div>
+  const [counter, setCounter] = useState<number>(0)
+  const incriment = () => {
+    setCounter(prev => prev + 1)
+  }
+  return (
+    <div>
+      <div>HOME</div>
+      <div className="">{counter}</div>
+      <button onClick={incriment}>+</button>
+    </div>
+  )
 }
