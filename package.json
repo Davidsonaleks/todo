@@ -8,10 +8,12 @@
   "scripts": {
     "webpack": "TS_NODE_PROJECT=\"tsconfig.json\" webpack --config ./webpack.config.ts",
     "wds": "TS_NODE_PROJECT=\"tsconfig.json\" webpack-dev-server --config ./webpack.config.ts",
+    "start": "NODE_ENV=production ts-node -r dotenv/config ./src/server.ts",
     "test": "ts-node -r dotenv/config src/app.ts",
     "test2": "node -r dotenv/config dist/web.js"
   },
   "devDependencies": {
+    "@types/koa": "^2.11.2",
     "@types/webpack": "^4.41.7",
     "@types/webpack-dev-server": "^3.10.0",
     "source-map-loader": "^0.2.4",
@@ -23,6 +25,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "koa": "^2.11.0"
   }
 }
