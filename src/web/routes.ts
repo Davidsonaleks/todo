@@ -1,9 +1,9 @@
 import { TRouteConfig } from "chyk"
 import { FC } from "react"
-import { Home } from "./home"
+import { Home } from "./home/home"
 import { Layout } from "./layout"
-import { NotFound } from "./not-found"
-import { NotHome } from "./not-home"
+import { NotFound } from "./not-found/not-found"
+import { NotHome } from "./not-home/not-home"
 
 export const routes: TRouteConfig[] = [
   {

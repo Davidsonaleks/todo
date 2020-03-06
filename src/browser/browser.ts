@@ -1,7 +1,7 @@
 import { Chyk } from "chyk"
 import { FC } from "react"
-import { LayoutRoot } from "./layout-root"
-import { routes } from "./routes"
+import { LayoutRoot } from "../web/layout-root"
+import { routes } from "../web/routes"
 
 const init = () => {
   new Chyk<{}>({

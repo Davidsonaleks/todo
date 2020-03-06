@@ -1,7 +1,7 @@
 import { DataRoutes, TRouteComponentProps, useChyk } from "chyk"
 import React, { FC } from "react"
 import { Link } from "react-router-dom"
-import { NotFound } from "./not-found"
+import { NotFound } from "./not-found/not-found"
 
 type TLayoutProps = TRouteComponentProps<{}>
 
