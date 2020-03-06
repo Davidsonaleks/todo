@@ -7,7 +7,7 @@ export const Home: FC = () => {
   }
   return (
     <div>
-      <div>HOME</div>
+      <div>HOME aaaa</div>
       <div className="">{counter}</div>
       <button onClick={incriment}>+</button>
     </div>
