@@ -8,10 +8,12 @@
   "scripts": {
     "build:prod": "TS_NODE_PROJECT=\"tsconfig.json\" webpack --config ./webpack.config.ts",
     "wds": "TS_NODE_PROJECT=\"tsconfig.json\" webpack-dev-server --config ./webpack.config.ts",
-    "start": "ts-node -r dotenv/config ./src/server/server.ts"
+    "start": "ts-node -r dotenv/config ./src/entry.ts"
   },
   "devDependencies": {
     "@types/koa": "^2.11.2",
+    "@types/koa-graphql": "^0.8.3",
+    "@types/koa-mount": "^4.0.0",
     "@types/react": "^16.9.23",
     "@types/react-router": "^5.1.4",
     "@types/react-router-dom": "^5.1.3",
@@ -27,10 +29,16 @@
   },
   "dependencies": {
     "@types/react-dom": "^16.9.5",
+    "apollo-server-koa": "^2.11.0",
     "chyk": "^0.9.1",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "graphql": "^14.6.0",
     "history": "^4.10.1",
     "koa": "^2.11.0",
+    "koa-graphql": "^0.8.0",
+    "koa-mount": "^4.0.0",
+    "mongoose": "^5.9.3",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-router": "^5.1.2",
