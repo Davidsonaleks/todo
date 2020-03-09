@@ -1,12 +1,18 @@
-import { GraphQLBoolean, GraphQLID, GraphQLObjectType, GraphQLString } from "graphql"
+import {
+  GraphQLBoolean,
+  GraphQLID,
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLString,
+} from "graphql"
 import { model, Schema } from "mongoose"
 
 export const TaskSchema = new GraphQLObjectType({
   name: "Task",
   fields: () => ({
-    id: { type: GraphQLID },
-    name: { type: GraphQLString },
-    isDone: { type: GraphQLBoolean },
+    id: { type: new GraphQLNonNull(GraphQLID) },
+    name: { type: new GraphQLNonNull(GraphQLString) },
+    isDone: { type: new GraphQLNonNull(GraphQLBoolean) },
   }),
 })
 

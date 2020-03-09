@@ -2,6 +2,7 @@ import {
   GraphQLBoolean,
   GraphQLID,
   GraphQLList,
+  GraphQLNonNull,
   GraphQLObjectType,
   GraphQLSchema,
   GraphQLString,
@@ -13,7 +14,7 @@ const Query = new GraphQLObjectType({
   fields: {
     task: {
       type: TaskSchema,
-      args: { id: { type: GraphQLID } },
+      args: { id: { type: new GraphQLNonNull(GraphQLID) } },
       resolve(_parent, args) {
         const task = TaskModel.findById(args.id)
         return task
@@ -33,7 +34,10 @@ const Mutation = new GraphQLObjectType({
   fields: {
     addNewTask: {
       type: TaskSchema,
-      args: { name: { type: GraphQLString }, isDone: { type: GraphQLBoolean } },
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        isDone: { type: new GraphQLNonNull(GraphQLBoolean) },
+      },
       resolve(_parent, { isDone, name }) {
         const task = new TaskModel({
           name,
@@ -47,7 +51,7 @@ const Mutation = new GraphQLObjectType({
     removeTask: {
       type: TaskSchema,
       args: {
-        id: { type: GraphQLID },
+        id: { type: new GraphQLNonNull(GraphQLID) },
       },
       resolve(_parent, args) {
         const deleteTask = TaskModel.findByIdAndRemove(args.id)
@@ -57,9 +61,9 @@ const Mutation = new GraphQLObjectType({
     updateTask: {
       type: TaskSchema,
       args: {
-        id: { type: GraphQLID },
-        name: { type: GraphQLString },
-        isDone: { type: GraphQLBoolean },
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        isDone: { type: new GraphQLNonNull(GraphQLBoolean) },
       },
       resolve(_parent, args) {
         const updateTask = TaskModel.findByIdAndUpdate(

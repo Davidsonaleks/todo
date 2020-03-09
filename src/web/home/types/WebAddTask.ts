@@ -8,11 +8,16 @@
 
 export interface WebAddTask_addNewTask {
   __typename: "Task";
-  id: string | null;
-  name: string | null;
-  isDone: boolean | null;
+  id: string;
+  name: string;
+  isDone: boolean;
 }
 
 export interface WebAddTask {
   addNewTask: WebAddTask_addNewTask | null;
+}
+
+export interface WebAddTaskVariables {
+  name: string;
+  isDone: boolean;
 }

@@ -8,9 +8,9 @@
 
 export interface WebHome_tasks {
   __typename: "Task";
-  id: string | null;
-  name: string | null;
-  isDone: boolean | null;
+  id: string;
+  name: string;
+  isDone: boolean;
 }
 
 export interface WebHome {
