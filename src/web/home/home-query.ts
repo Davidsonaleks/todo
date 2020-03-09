@@ -9,3 +9,13 @@ export const GqlHome = gql`
     }
   }
 `
+
+export const GqlHomeCreate = gql`
+  query WebHome {
+    addNewTask {
+      id
+      name
+      isDone
+    }
+  }
+`
