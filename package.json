@@ -10,7 +10,10 @@
     "wds": "TS_NODE_PROJECT=\"tsconfig.json\" webpack-dev-server --config ./webpack.config.ts",
     "start": "ts-node-dev --no-notify --respawn --transpileOnly -r dotenv/config   ./src/entry.ts",
     "start:server": "ts-node -r dotenv/config ./src/server/server.ts",
-    "start:api": "ts-node -r dotenv/config ./src/api/api-server.ts"
+    "start:api": "ts-node -r dotenv/config ./src/api/api-server.ts",
+    "apollo:download": "apollo schema:download --endpoint=http://localhost:3002/ apollo-schema.json",
+    "apollo:codegen": "apollo client:codegen --localSchemaFile=apollo-schema.json --target=typescript --includes=src/**/*.ts --tagName=gql --addTypename types",
+    "apollo": "yarn apollo:download && yarn apollo:codegen"
   },
   "devDependencies": {
     "@koa/cors": "^3.0.0",

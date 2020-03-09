@@ -11,7 +11,7 @@ export const GqlHome = gql`
 `
 
 export const GqlHomeCreate = gql`
-  query WebHome {
+  mutation WebAddTask {
     addNewTask {
       id
       name
