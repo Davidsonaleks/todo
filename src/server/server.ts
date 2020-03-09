@@ -7,6 +7,7 @@ const web_port = Number(PORT)
 const server = new Koa()
 
 server.use(spa_middleware)
+
 server.listen(web_port, () => {
   console.log("🚀 Web Server started", "http://localhost:" + web_port)
 })

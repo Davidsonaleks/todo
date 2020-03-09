@@ -13,6 +13,7 @@
     "start:api": "ts-node -r dotenv/config ./src/api/api-server.ts"
   },
   "devDependencies": {
+    "@koa/cors": "^3.0.0",
     "@types/koa": "^2.11.2",
     "@types/koa-graphql": "^0.8.3",
     "@types/koa-mount": "^4.0.0",
@@ -33,6 +34,12 @@
   },
   "dependencies": {
     "@types/react-dom": "^16.9.5",
+    "apollo-cache-inmemory": "^1.6.5",
+    "apollo-client": "^2.6.8",
+    "apollo-link-context": "^1.0.19",
+    "apollo-link-error": "^1.1.12",
+    "apollo-link-http": "^1.5.16",
+    "apollo-link-ws": "^1.0.19",
     "apollo-server-koa": "^2.11.0",
     "chyk": "^0.9.1",
     "cors": "^2.8.5",

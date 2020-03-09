@@ -1,6 +1,6 @@
 import { TRouteConfig } from "chyk"
 import { FC } from "react"
-import { Home } from "./home/home"
+import { Home, homeLoader } from "./home/home"
 import { Layout } from "./layout"
 import { NotFound } from "./not-found/not-found"
 import { NotHome } from "./not-home/not-home"
@@ -13,6 +13,8 @@ export const routes: TRouteConfig[] = [
         path: "/",
         exact: true,
         component: Home as FC,
+        dataKey: "promotion",
+        loadData: homeLoader,
       },
       {
         path: "/not-home",

@@ -62,10 +62,14 @@ const Mutation = new GraphQLObjectType({
         isDone: { type: GraphQLBoolean },
       },
       resolve(_parent, args) {
-        const updateTask = TaskModel.findByIdAndUpdate(args.id, {
-          name: args.name,
-          isDone: args.isDone,
-        })
+        const updateTask = TaskModel.findByIdAndUpdate(
+          args.id,
+          {
+            name: args.name,
+            isDone: args.isDone,
+          },
+          { new: true }
+        )
         return updateTask
       },
     },
