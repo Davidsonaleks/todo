@@ -1,4 +1,11 @@
-import { GraphQLID, GraphQLList, GraphQLObjectType, GraphQLSchema } from "graphql"
+import {
+  GraphQLBoolean,
+  GraphQLID,
+  GraphQLList,
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLString,
+} from "graphql"
 import { TaskModel, TaskSchema } from "../task/task"
 
 const Query = new GraphQLObjectType({
@@ -21,6 +28,51 @@ const Query = new GraphQLObjectType({
   },
 })
 
+const Mutation = new GraphQLObjectType({
+  name: "Mutation",
+  fields: {
+    addNewTask: {
+      type: TaskSchema,
+      args: { name: { type: GraphQLString }, isDone: { type: GraphQLBoolean } },
+      resolve(_parent, { isDone, name }) {
+        const task = new TaskModel({
+          name,
+          isDone,
+        })
+        const newTask = task.save()
+
+        return newTask
+      },
+    },
+    removeTask: {
+      type: TaskSchema,
+      args: {
+        id: { type: GraphQLID },
+      },
+      resolve(_parent, args) {
+        const deleteTask = TaskModel.findByIdAndRemove(args.id)
+        return deleteTask
+      },
+    },
+    updateTask: {
+      type: TaskSchema,
+      args: {
+        id: { type: GraphQLID },
+        name: { type: GraphQLString },
+        isDone: { type: GraphQLBoolean },
+      },
+      resolve(_parent, args) {
+        const updateTask = TaskModel.findByIdAndUpdate(args.id, {
+          name: args.name,
+          isDone: args.isDone,
+        })
+        return updateTask
+      },
+    },
+  },
+})
+
 export const rootQuery = new GraphQLSchema({
   query: Query,
+  mutation: Mutation,
 })

@@ -21,8 +21,8 @@ connect(
 
 server.use(graphQLServer.getMiddleware({ path: "/" }))
 
-connection.on("error", err => console.log("COnnection Error " + err))
-connection.once("open", () => console.log("COnnection to DB!"))
+connection.on("error", err => console.log("Connection to DB Error " + err))
+connection.once("open", () => console.log("Connection to DB Success!"))
 
 server.listen(web_port, () => {
   console.log("🚀 Api Server started", "http://localhost:" + web_port)

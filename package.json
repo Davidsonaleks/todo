@@ -8,7 +8,7 @@
   "scripts": {
     "build:prod": "TS_NODE_PROJECT=\"tsconfig.json\" webpack --config ./webpack.config.ts",
     "wds": "TS_NODE_PROJECT=\"tsconfig.json\" webpack-dev-server --config ./webpack.config.ts",
-    "start": "ts-node -r dotenv/config ./src/entry.ts",
+    "start": "ts-node-dev --no-notify --respawn --transpileOnly -r dotenv/config   ./src/entry.ts",
     "start:server": "ts-node -r dotenv/config ./src/server/server.ts",
     "start:api": "ts-node -r dotenv/config ./src/api/api-server.ts"
   },
