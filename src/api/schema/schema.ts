@@ -44,6 +44,9 @@ const Mutation = new GraphQLObjectType({
           isDone,
         })
         const newTask = task.save()
+        if (!newTask) {
+          throw new Error("not found")
+        }
 
         return newTask
       },
