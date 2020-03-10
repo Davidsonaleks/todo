@@ -3,18 +3,9 @@ import { TRouteComponentProps } from "chyk"
 import React, { FC, useState } from "react"
 import { TLoadData } from "../../types"
 import { GqlHome } from "./home-query"
+import { WebHome } from "./types/WebHome"
 
-type TTaskProps = {
-  id: string
-  name: string
-  isDone: boolean
-}
-
-type TDataProps = {
-  tasks: TTaskProps[]
-}
-
-type THomeData = ApolloQueryResult<TDataProps>
+type THomeData = ApolloQueryResult<WebHome>
 export const homeLoader: TLoadData<THomeData> = async (_, { apollo }) =>
   apollo.query({
     query: GqlHome,
@@ -22,7 +13,7 @@ export const homeLoader: TLoadData<THomeData> = async (_, { apollo }) =>
 
 type THomeProps = TRouteComponentProps<THomeData>
 export const Home: FC<THomeProps> = ({ data }) => {
-  const tasks: TTaskProps[] = data.tasks
+  console.log(data)
   const [value, setValue] = useState<string>("")
   // const create = async () => {
   //   const new_task = await
@@ -34,11 +25,11 @@ export const Home: FC<THomeProps> = ({ data }) => {
       <br />
       <br />
       <br />
-      {tasks.map(task => (
+      {/* {tasks.map(task => (
         <div key={task.id} style={{ display: "flex" }}>
           <div>{task.name}</div>
         </div>
-      ))}
+      ))} */}
       NEW TASK
       <input value={value} onChange={e => setValue(e.target.value)} />
     </div>
