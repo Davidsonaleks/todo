@@ -1,85 +1,22 @@
-import {
-  GraphQLBoolean,
-  GraphQLID,
-  GraphQLList,
-  GraphQLNonNull,
-  GraphQLObjectType,
-  GraphQLSchema,
-  GraphQLString,
-} from "graphql"
-import { TaskModel, TaskSchema } from "../task/task"
+import { GraphQLObjectType, GraphQLSchema } from "graphql"
+import { CategoryMutation } from "../category/category-mutation"
+import { CategoryQuery } from "../category/category-query"
+import { TaskMutation } from "../task/task-mutation"
+import { TaskQuery } from "../task/task-query"
 
 const Query = new GraphQLObjectType({
   name: "Query",
   fields: {
-    task: {
-      type: TaskSchema,
-      args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-      resolve(_parent, args) {
-        const task = TaskModel.findById(args.id)
-        return task
-      },
-    },
-    tasks: {
-      type: GraphQLList(TaskSchema),
-      resolve(_parent, _args) {
-        return TaskModel.find({})
-      },
-    },
+    ...TaskQuery,
+    ...CategoryQuery,
   },
 })
 
 const Mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: {
-    addNewTask: {
-      type: TaskSchema,
-      args: {
-        name: { type: new GraphQLNonNull(GraphQLString) },
-        isDone: { type: new GraphQLNonNull(GraphQLBoolean) },
-      },
-      resolve(_parent, { isDone, name }) {
-        const task = new TaskModel({
-          name,
-          isDone,
-        })
-        const newTask = task.save()
-        if (!newTask) {
-          throw new Error("not found")
-        }
-
-        return newTask
-      },
-    },
-    removeTask: {
-      type: TaskSchema,
-      args: {
-        id: { type: new GraphQLNonNull(GraphQLID) },
-      },
-      resolve(_parent, args) {
-        const deleteTask = TaskModel.findByIdAndRemove(args.id)
-        return deleteTask
-      },
-    },
-    updateTask: {
-      type: TaskSchema,
-      args: {
-        id: { type: new GraphQLNonNull(GraphQLID) },
-        name: { type: new GraphQLNonNull(GraphQLString) },
-        isDone: { type: new GraphQLNonNull(GraphQLBoolean) },
-      },
-      resolve(_parent, args) {
-        const updateTask = TaskModel.findByIdAndUpdate(
-          args.id,
-          {
-            name: args.name,
-            isDone: args.isDone,
-          },
-          { new: true }
-        )
-        return updateTask
-      },
-    },
+    ...CategoryMutation,
+    ...TaskMutation,
   },
 })
 
