@@ -1,4 +1,5 @@
 require("dotenv").config()
+import { ServerStyleSheets } from "@material-ui/core"
 import { InMemoryCache } from "apollo-cache-inmemory"
 import { ApolloClient } from "apollo-client"
 import { ApolloLink } from "apollo-link"
@@ -21,8 +22,9 @@ export const spa_middleware: Middleware = async (ctx, next) => {
 
   if (DISABLE_SSR === "true") {
     ctx.status = 200
-    ctx.body = template({ html: "", statusCode: 200 })
+    ctx.body = template({ html: "", statusCode: 200, css: "" })
   } else {
+    const sheets = new ServerStyleSheets()
     const httpLink = createHttpLink({
       uri: graphql_uri,
       fetch: fetch as any, // https://github.com/apollographql/apollo-client/issues/5367
@@ -40,9 +42,10 @@ export const spa_middleware: Middleware = async (ctx, next) => {
       onLoadError: () => {}, // we catch all errors in apollo error link
     })
     await chyk.loadData(pathname)
-    const html = renderToString(createElement(ChykStaticComponent, { chyk }))
+    const html = renderToString(sheets.collect(createElement(ChykStaticComponent, { chyk })))
+    const css = sheets.toString()
     const { statusCode } = chyk.locationState
-    ctx.body = template({ html, statusCode })
+    ctx.body = template({ html, statusCode, css })
   }
   await next()
 }
@@ -50,6 +53,7 @@ export const spa_middleware: Middleware = async (ctx, next) => {
 type TTemplateProps = {
   html: string
   statusCode: number
+  css: string
 }
 
 const template = (props: TTemplateProps) => `
@@ -59,6 +63,7 @@ const template = (props: TTemplateProps) => `
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style id="jss-server-side">${props.css}</style>
   </head>
   <body>
     <div id="app">${props.html}</div>
