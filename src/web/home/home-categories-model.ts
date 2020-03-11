@@ -7,4 +7,11 @@ export class HomeCategoriesModel {
   setCategories(categories: WebHome_categories[]) {
     this.categories.replace(categories)
   }
+
+  @observable
+  isPopup: boolean = false
+
+  setPopup(b: boolean) {
+    this.isPopup = b
+  }
 }

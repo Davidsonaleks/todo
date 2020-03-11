@@ -33,3 +33,12 @@ export const GqlHomeCreate = gql`
     }
   }
 `
+
+export const GqlHomeCategoryUpdate = gql`
+  mutation WebCategoryUpdate($name: String!, $id: ID!) {
+    updateCategory(name: $name, id: $id) {
+      id
+      name
+    }
+  }
+`

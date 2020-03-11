@@ -9,6 +9,6 @@ export const CategorySchema = new GraphQLObjectType({
   }),
 })
 const t = new Schema({
-  name: { type: String, required: true },
+  name: { type: String },
 })
 export const CategoryModel = model("category", t)

@@ -1,5 +1,5 @@
 import { ValidationError } from "apollo-server-errors"
-import { GraphQLList } from "graphql"
+import { GraphQLID, GraphQLList, GraphQLNonNull } from "graphql"
 import { TSchemaField } from "../../types"
 import { CategoryModel, CategorySchema } from "./category"
 
@@ -14,6 +14,17 @@ export const CategoryQuery: TSchemaField = {
         throw new ValidationError("not found")
       }
       return tasks_list
+    },
+  },
+  category: {
+    type: CategorySchema,
+    args: { id: { type: new GraphQLNonNull(GraphQLID) } },
+    resolve(_parent, args) {
+      const cat = CategoryModel.findById(args.id)
+      // if (!cat) {
+      //   throw new ValidationError("not found")
+      // }
+      return cat
     },
   },
 }
