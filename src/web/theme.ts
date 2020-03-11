@@ -1,15 +1,20 @@
 import { createMuiTheme, Theme } from "@material-ui/core"
 
 //colors
-const background = "#f3f5f9"
+//const background = "#f3f5f9"
+const blue = "#3366ff"
+const white = "#fff"
 
 //gap
 const spacing = 12
-const innerPadding = 14
+const innerPadding = 18
 
 type TCustomRakebackTheme = {
   gap: {
     innerPadding: number
+  }
+  colors: {
+    white: string
   }
 }
 
@@ -17,6 +22,9 @@ const getCustomRakebackTheme = (): TCustomRakebackTheme => {
   return {
     gap: {
       innerPadding,
+    },
+    colors: {
+      white,
     },
   }
 }
@@ -35,8 +43,8 @@ export const getTheme = () => {
   return createMuiTheme({
     spacing,
     palette: {
-      background: {
-        default: background,
+      primary: {
+        main: blue,
       },
     },
     mixins: {},
@@ -56,6 +64,12 @@ export const getTheme = () => {
       // overline: overline, //Caption Date
     },
     overrides: {},
-    props: {},
+    props: {
+      MuiTextField: {
+        variant: "outlined",
+        fullWidth: true,
+        margin: "dense",
+      },
+    },
   })
 }

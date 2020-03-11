@@ -43,8 +43,8 @@ export const Home: FC<THomeProps> = ({ data }) => {
 
   return (
     <HomeContext.Provider value={{ categories_model }}>
+      <HomeCategories />
       <PageInner>
-        <HomeCategories />
         <div>HOME</div>
         <br />
         <br />
