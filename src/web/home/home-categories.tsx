@@ -42,10 +42,8 @@ export const HomeCategory: FC<THomeCategoryProps> = ({ category }) => {
   const classes = useHomeCategoryStyles()
   const apollo = useApollo()
   const ui = useUI()
-  const [test, settest] = useState<boolean>(false)
+  const [isPopup, setPopup] = useState<boolean>(false)
   const { categories_model } = useHomeContext()
-  const openPopup = () => categories_model.setPopup(true)
-  const closePopup = () => categories_model.setPopup(false)
 
   const updateCategory = async (values: WebHome_categories) => {
     ui.setLocker(true)
@@ -64,10 +62,10 @@ export const HomeCategory: FC<THomeCategoryProps> = ({ category }) => {
   }
   return useObserver(() => (
     <>
-      <div className={classes.category} onClick={() => settest(true)}>
+      <div className={classes.category} onClick={() => setPopup(true)}>
         {category.name}
       </div>
-      <Dialog open={test} onClose={() => settest(false)}>
+      <Dialog open={isPopup} onClose={() => setPopup(false)}>
         <div className={classes.dialog}>
           <Typography variant="h2" align="center" className={classes.title}>
             Добавить платежную систему
