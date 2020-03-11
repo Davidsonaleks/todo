@@ -14,7 +14,7 @@ export interface WebAddTask_addNewTask {
 }
 
 export interface WebAddTask {
-  addNewTask: WebAddTask_addNewTask | null;
+  addNewTask: (WebAddTask_addNewTask | null)[] | null;
 }
 
 export interface WebAddTaskVariables {

@@ -1565,7 +1565,7 @@ cliui@^5.0.0:
     strip-ansi "^5.2.0"
     wrap-ansi "^5.1.0"
 
-clsx@^1.0.2:
+clsx@^1.0.2, clsx@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/clsx/-/clsx-1.1.0.tgz#62937c6adfea771247c34b54d320fb99624f5702"
   integrity sha512-3avwM37fSK5oP6M5rQ9CNe99lwxhXDOeSWVPAOYF6OazUTgZCMb0yWlJpmdD74REy1gkEaFiub2ULv4fq9GUhA==
@@ -3842,6 +3842,26 @@ mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
+mobx-keystone@^0.43.0:
+  version "0.43.0"
+  resolved "https://registry.npmjs.org/mobx-keystone/-/mobx-keystone-0.43.0.tgz#43e545669615e105c5616dc94584ff3f54b75a65"
+  integrity sha512-LXrF64k2HUzP/gBWrII2GqZPRsf4OYfQNHXYoQC90xt6KB74iLDGME2p1jC0HLzhaPj645VmIR6q4W4Oo+RyYg==
+  dependencies:
+    fast-deep-equal "^3.1.1"
+    ts-toolbelt "^6.1.4"
+    tslib "^1.10.0"
+    uuid "^7.0.0"
+
+mobx-react-lite@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.npmjs.org/mobx-react-lite/-/mobx-react-lite-1.5.2.tgz#c4395b0568b9cb16f07669d8869cc4efa1b8656d"
+  integrity sha512-PyZmARqqWtpuQaAoHF5pKX7h6TKNLwq6vtovm4zZvG6sEbMRHHSqioGXSeQbpRmG8Kw8uln3q/W1yMO5IfL5Sg==
+
+mobx@^5.15.4:
+  version "5.15.4"
+  resolved "https://registry.npmjs.org/mobx/-/mobx-5.15.4.tgz#9da1a84e97ba624622f4e55a0bf3300fb931c2ab"
+  integrity sha512-xRFJxSU2Im3nrGCdjSuOTFmxVDGeqOHL+TyADCGbT0k4HHqGmx5u2yaHNryvoORpI4DfbzjJ5jPmuv+d7sioFw==
+
 mongodb@3.5.4:
   version "3.5.4"
   resolved "https://registry.npmjs.org/mongodb/-/mongodb-3.5.4.tgz#f7609cfa9f8c56c35e844b4216ddc3a1b1ec5bef"
@@ -5548,6 +5568,11 @@ ts-node@*, ts-node@^8.6.2:
     source-map-support "^0.5.6"
     yn "3.1.1"
 
+ts-toolbelt@^6.1.4:
+  version "6.3.6"
+  resolved "https://registry.npmjs.org/ts-toolbelt/-/ts-toolbelt-6.3.6.tgz#2bde29106c013ed520c32f30e1248daf8fd4f5f9"
+  integrity sha512-eVzym+LyQodOCfyVyQDQ6FGYbO2Xf9Nc4dGLRKlKSUpAs+8qQWHG+grDiA3ciEuNPNZ0qJnNIYkdqBW1rCWuUA==
+
 tsconfig@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/tsconfig/-/tsconfig-7.0.0.tgz#84538875a4dc216e5c4a5432b3a4dec3d54e91b7"
@@ -5709,6 +5734,11 @@ uuid@^3.0.1, uuid@^3.1.0, uuid@^3.3.2:
   version "3.4.0"
   resolved "https://registry.npmjs.org/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
+
+uuid@^7.0.0:
+  version "7.0.2"
+  resolved "https://registry.npmjs.org/uuid/-/uuid-7.0.2.tgz#7ff5c203467e91f5e0d85cfcbaaf7d2ebbca9be6"
+  integrity sha512-vy9V/+pKG+5ZTYKf+VcphF5Oc6EFiu3W8Nv3P3zIh0EqVI80ZxOzuPfe9EHjkFNvf8+xuTHVeei4Drydlx4zjw==
 
 v8-compile-cache@2.0.3:
   version "2.0.3"

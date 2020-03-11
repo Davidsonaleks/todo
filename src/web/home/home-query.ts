@@ -7,6 +7,10 @@ export const GqlHome = gql`
       name
       isDone
     }
+    categories {
+      id
+      name
+    }
   }
 `
 

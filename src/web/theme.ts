@@ -3,13 +3,22 @@ import { createMuiTheme, Theme } from "@material-ui/core"
 //colors
 const background = "#f3f5f9"
 
-//spacing
+//gap
 const spacing = 12
+const innerPadding = 14
 
-type TCustomRakebackTheme = {}
+type TCustomRakebackTheme = {
+  gap: {
+    innerPadding: number
+  }
+}
 
 const getCustomRakebackTheme = (): TCustomRakebackTheme => {
-  return {}
+  return {
+    gap: {
+      innerPadding,
+    },
+  }
 }
 
 export type TTheme = Theme & { custom: TCustomRakebackTheme }

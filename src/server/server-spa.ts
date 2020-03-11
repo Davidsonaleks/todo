@@ -12,6 +12,7 @@ import { renderToString } from "react-dom/server"
 import { TDeps } from "../types"
 import { LayoutRoot } from "../web/layout-root"
 import { routes } from "../web/routes"
+import { userInterface } from "./../util/user-interface"
 import { onErrorLink } from "./apollo"
 
 const { WDS_PORT, DISABLE_SSR, GRAPHQL_PORT } = process.env
@@ -37,7 +38,7 @@ export const spa_middleware: Middleware = async (ctx, next) => {
 
     const chyk = new Chyk<TDeps>({
       routes,
-      deps: { apollo },
+      deps: { apollo, userInterface },
       component: LayoutRoot,
       onLoadError: () => {}, // we catch all errors in apollo error link
     })

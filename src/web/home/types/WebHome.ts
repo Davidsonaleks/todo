@@ -13,6 +13,13 @@ export interface WebHome_tasks {
   isDone: boolean;
 }
 
+export interface WebHome_categories {
+  __typename: "Category";
+  id: string;
+  name: string;
+}
+
 export interface WebHome {
   tasks: (WebHome_tasks | null)[] | null;
+  categories: (WebHome_categories | null)[] | null;
 }

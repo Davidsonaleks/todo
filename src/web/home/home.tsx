@@ -1,11 +1,15 @@
 import { ApolloQueryResult } from "apollo-client"
 import { TRouteComponentProps } from "chyk"
-import React, { FC, useState } from "react"
+import React, { FC, useMemo, useState } from "react"
 import { useApollo } from "../../di"
 import { TLoadData } from "../../types"
+import { PageInner } from "../el/page-inner"
+import { HomeCategories } from "./home-categories"
+import { HomeCategoriesModel } from "./home-categories-model"
+import { HomeContext } from "./home-ctx"
 import { GqlHome, GqlHomeCreate } from "./home-query"
 import { WebAddTask, WebAddTaskVariables } from "./types/WebAddTask"
-import { WebHome } from "./types/WebHome"
+import { WebHome, WebHome_categories } from "./types/WebHome"
 
 type THomeData = ApolloQueryResult<WebHome>
 export const homeLoader: TLoadData<THomeData> = async (_, { apollo }) =>
@@ -27,22 +31,35 @@ export const Home: FC<THomeProps> = ({ data }) => {
       },
     })
   }
+
+  const categories_model = useMemo(() => {
+    const categories_model = new HomeCategoriesModel()
+    if (data.categories) {
+      const cat = data.categories.filter(item => item && item) as WebHome_categories[]
+      categories_model.setCategories(cat)
+    }
+    return categories_model
+  }, [])
+
   return (
-    <div>
-      <div>HOME</div>
-      <br />
-      <br />
-      <br />
-      <br />
-      {tasks &&
-        tasks.map(task => (
-          <div key={task!.id} style={{ display: "flex" }}>
-            <div>{task!.name}</div>
-          </div>
-        ))}
-      NEW TASK
-      <input value={value} onChange={e => setValue(e.target.value)} />
-      <button onClick={create}>Go</button>
-    </div>
+    <HomeContext.Provider value={{ categories_model }}>
+      <PageInner>
+        <HomeCategories />
+        <div>HOME</div>
+        <br />
+        <br />
+        <br />
+        <br />
+        {tasks &&
+          tasks.map(task => (
+            <div key={task!.id} style={{ display: "flex" }}>
+              <div>{task!.name}</div>
+            </div>
+          ))}
+        NEW TASK
+        <input value={value} onChange={e => setValue(e.target.value)} />
+        <button onClick={create}>Go</button>
+      </PageInner>
+    </HomeContext.Provider>
   )
 }

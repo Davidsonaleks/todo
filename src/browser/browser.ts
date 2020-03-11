@@ -10,6 +10,7 @@ import { onErrorLink } from "../server/apollo"
 import { TDeps } from "../types"
 import { LayoutRoot } from "../web/layout-root"
 import { routes } from "../web/routes"
+import { userInterface } from "./../util/user-interface"
 
 const defaultOptions: DefaultOptions = {
   watchQuery: {
@@ -36,7 +37,7 @@ const init = () => {
   new Chyk<TDeps>({
     routes,
     history,
-    deps: { apollo },
+    deps: { apollo, userInterface },
     statusCode: (window as any).ssr_statusCode,
     el: document.getElementById("app"),
     component: LayoutRoot as FC,
