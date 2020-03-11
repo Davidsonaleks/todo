@@ -10,6 +10,16 @@ export const GqlHome = gql`
   }
 `
 
+export const GqlTask = gql`
+  query WebTask($id: ID!) {
+    task(id: $id) {
+      id
+      name
+      isDone
+    }
+  }
+`
+
 export const GqlHomeCreate = gql`
   mutation WebAddTask($name: String!, $isDone: Boolean!) {
     addNewTask(name: $name, isDone: $isDone) {

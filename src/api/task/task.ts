@@ -15,9 +15,8 @@ export const TaskSchema = new GraphQLObjectType({
     isDone: { type: new GraphQLNonNull(GraphQLBoolean) },
   }),
 })
-
 const t = new Schema({
-  name: String,
-  isDone: Boolean,
+  name: { type: String },
+  isDone: { type: Boolean },
 })
-export const TaskModel = model("Task", t)
+export const TaskModel = model("task", t)

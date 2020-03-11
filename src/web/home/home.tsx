@@ -1,8 +1,10 @@
 import { ApolloQueryResult } from "apollo-client"
 import { TRouteComponentProps } from "chyk"
 import React, { FC, useState } from "react"
+import { useApollo } from "../../di"
 import { TLoadData } from "../../types"
-import { GqlHome } from "./home-query"
+import { GqlHome, GqlHomeCreate } from "./home-query"
+import { WebAddTask, WebAddTaskVariables } from "./types/WebAddTask"
 import { WebHome } from "./types/WebHome"
 
 type THomeData = ApolloQueryResult<WebHome>
@@ -13,11 +15,18 @@ export const homeLoader: TLoadData<THomeData> = async (_, { apollo }) =>
 
 type THomeProps = TRouteComponentProps<THomeData>
 export const Home: FC<THomeProps> = ({ data }) => {
-  console.log(data)
+  const { tasks } = data
+  const apollo = useApollo()
   const [value, setValue] = useState<string>("")
-  // const create = async () => {
-  //   const new_task = await
-  // }
+  const create = async () => {
+    await apollo.mutate<WebAddTask, WebAddTaskVariables>({
+      mutation: GqlHomeCreate,
+      variables: {
+        name: value,
+        isDone: false,
+      },
+    })
+  }
   return (
     <div>
       <div>HOME</div>
@@ -25,13 +34,15 @@ export const Home: FC<THomeProps> = ({ data }) => {
       <br />
       <br />
       <br />
-      {/* {tasks.map(task => (
-        <div key={task.id} style={{ display: "flex" }}>
-          <div>{task.name}</div>
-        </div>
-      ))} */}
+      {tasks &&
+        tasks.map(task => (
+          <div key={task!.id} style={{ display: "flex" }}>
+            <div>{task!.name}</div>
+          </div>
+        ))}
       NEW TASK
       <input value={value} onChange={e => setValue(e.target.value)} />
+      <button onClick={create}>Go</button>
     </div>
   )
 }
