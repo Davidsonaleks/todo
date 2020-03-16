@@ -10,6 +10,7 @@ export const GqlHome = gql`
     categories {
       id
       name
+      color
     }
   }
 `
@@ -39,6 +40,7 @@ export const GqlHomeCategoryUpdate = gql`
     updateCategory(name: $name, id: $id) {
       id
       name
+      color
     }
   }
 `
@@ -48,6 +50,7 @@ export const GqlHomeCategoryCreate = gql`
     addCategory(name: $name) {
       id
       name
+      color
     }
   }
 `

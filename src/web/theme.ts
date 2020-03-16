@@ -83,6 +83,13 @@ export const getTheme = (mode: "dark" | "light") => {
         fullWidth: true,
         margin: "dense",
       },
+      MuiButton: {
+        variant: "contained",
+        color: "primary",
+      },
+      MuiGrid: {
+        spacing: 1,
+      },
     },
   })
 }

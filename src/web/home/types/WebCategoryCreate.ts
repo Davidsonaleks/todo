@@ -10,6 +10,7 @@ export interface WebCategoryCreate_addCategory {
   __typename: "Category";
   id: string;
   name: string;
+  color: string | null;
 }
 
 export interface WebCategoryCreate {

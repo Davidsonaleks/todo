@@ -10,6 +10,7 @@ export interface WebCategoryUpdate_updateCategory {
   __typename: "Category";
   id: string;
   name: string;
+  color: string | null;
 }
 
 export interface WebCategoryUpdate {

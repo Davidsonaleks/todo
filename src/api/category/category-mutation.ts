@@ -8,10 +8,12 @@ export const CategoryMutation: TSchemaField = {
     type: GraphQLList(CategorySchema),
     args: {
       name: { type: new GraphQLNonNull(GraphQLString) },
+      color: { type: GraphQLString },
     },
     resolve: async (_, args) => {
       const category = new CategoryModel({
         name: args.name,
+        color: args.color,
       })
       await category.save()
       if (!category) {
@@ -26,12 +28,14 @@ export const CategoryMutation: TSchemaField = {
     args: {
       id: { type: new GraphQLNonNull(GraphQLID) },
       name: { type: new GraphQLNonNull(GraphQLString) },
+      color: { type: GraphQLString },
     },
     resolve: async (_parent, args) => {
       const updateTask = await CategoryModel.findByIdAndUpdate(
         args.id,
         {
           name: args.name,
+          color: args.color,
         },
         { new: true }
       )

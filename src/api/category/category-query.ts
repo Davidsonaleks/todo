@@ -21,9 +21,6 @@ export const CategoryQuery: TSchemaField = {
     args: { id: { type: new GraphQLNonNull(GraphQLID) } },
     resolve(_parent, args) {
       const cat = CategoryModel.findById(args.id)
-      // if (!cat) {
-      //   throw new ValidationError("not found")
-      // }
       return cat
     },
   },

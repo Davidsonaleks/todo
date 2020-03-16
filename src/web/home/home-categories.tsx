@@ -3,12 +3,16 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  Grid,
   makeStyles,
   Typography,
+  useTheme,
 } from "@material-ui/core"
+import ColorizeIcon from "@material-ui/icons/Colorize"
 import SaveIcon from "@material-ui/icons/Save"
 import { useObserver } from "mobx-react-lite"
 import React, { FC, useState } from "react"
+import { ChromePicker, ColorResult } from "react-color"
 import { Form, FormRenderProps, FormSpy } from "react-final-form"
 import { useApollo, useUI } from "../../di"
 import { CREATED_ID } from "../../util/common"
@@ -22,11 +26,13 @@ import { WebHome_categories } from "./types/WebHome"
 
 export const HomeCategories: FC = () => {
   const classes = useStyles()
+  const theme = useTheme()
   const { categories_model } = useHomeContext()
   const newCategory: WebHome_categories = {
     __typename: "Category",
     id: CREATED_ID,
     name: "",
+    color: theme.palette.primary.main,
   }
   return (
     <div className={classes.root}>
@@ -87,6 +93,7 @@ export const HomeCategory: FC<THomeCategoryProps> = ({ category }) => {
         variables: {
           id: category.id,
           name: values.name,
+          //color: values.color,
         },
       })
       if (r.data && r.data.updateCategory) {
@@ -128,7 +135,7 @@ export const HomeCategory: FC<THomeCategoryProps> = ({ category }) => {
       </div>
       <Dialog open={isPopup} onClose={() => setPopup(false)}>
         <DialogTitle className={classes.title}>
-          {category.id === CREATED_ID ? "Create" : "Update"}Category
+          {category.id === CREATED_ID ? "Create category" : "Update " + category.name}
         </DialogTitle>
         <DialogContent>
           <Form
@@ -181,10 +188,31 @@ const useHomeCategoryStyles = makeStyles<TTheme>(
 )
 
 export const HomeCategoryFields: FC<FormRenderProps> = ({ handleSubmit }) => {
+  const theme = useTheme()
   const classes = useHomeCategoryFieldsStyles()
+  const [isPopup, setPopup] = useState<boolean>(false)
+  const [color, setColor] = useState<string>(theme.palette.primary.main)
+  // console.log(name)
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
       <FFTextField name="name" label="name" />
+      <Grid container alignItems="center" spacing={1}>
+        <Grid item>
+          <FFTextField name="color" label="color" value={color} />
+        </Grid>
+        <Grid item>
+          <Button onClick={() => setPopup(!isPopup)}>
+            <ColorizeIcon />
+          </Button>
+        </Grid>
+        {isPopup && (
+          <ChromePicker
+            color={color}
+            onChangeComplete={(color: ColorResult) => setColor(color.hex)}
+          />
+        )}
+      </Grid>
+
       <FormSpy>
         {({ hasValidationErrors, submitting, pristine }) => (
           <Button

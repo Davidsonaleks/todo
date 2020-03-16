@@ -17,6 +17,7 @@ export interface WebHome_categories {
   __typename: "Category";
   id: string;
   name: string;
+  color: string | null;
 }
 
 export interface WebHome {
