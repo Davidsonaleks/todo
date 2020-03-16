@@ -19,7 +19,7 @@ export const Header: FC = () => {
   }
   return useObserver(() => (
     <AppBar position="static">
-      <Toolbar>
+      <Toolbar className={classes.toolbar}>
         <PageInner component="nav" className={clsx(classes.flex, classes.root)}>
           <div className={classes.flex}>
             <MenuIcon className={classes.icon2} onClick={openMenu} />
@@ -53,6 +53,9 @@ const useStyles = makeStyles<TTheme>(
       },
       title: {
         marginLeft: theme.spacing(2),
+      },
+      toolbar: {
+        padding: 0,
       },
     }
   },
