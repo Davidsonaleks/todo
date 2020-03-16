@@ -40,7 +40,6 @@ export const Home: FC<THomeProps> = ({ data }) => {
     }
     return categories_model
   }, [])
-
   return (
     <HomeContext.Provider value={{ categories_model }}>
       <HomeCategories />

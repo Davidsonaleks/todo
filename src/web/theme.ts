@@ -2,12 +2,12 @@ import { createMuiTheme, Theme } from "@material-ui/core"
 
 const colors = {
   blue: {
-    dark: "#333",
     light: "#3366ff",
+    dark: "#333",
   },
   background: {
+    light: "#fff",
     dark: "#212121",
-    light: "#ECEFF1",
   },
 }
 
