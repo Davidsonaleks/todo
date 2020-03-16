@@ -36,8 +36,8 @@ export const GqlHomeCreate = gql`
 `
 
 export const GqlHomeCategoryUpdate = gql`
-  mutation WebCategoryUpdate($name: String!, $id: ID!) {
-    updateCategory(name: $name, id: $id) {
+  mutation WebCategoryUpdate($name: String!, $id: ID!, $color: String) {
+    updateCategory(name: $name, id: $id, color: $color) {
       id
       name
       color
@@ -46,8 +46,17 @@ export const GqlHomeCategoryUpdate = gql`
 `
 
 export const GqlHomeCategoryCreate = gql`
-  mutation WebCategoryCreate($name: String!) {
-    addCategory(name: $name) {
+  mutation WebCategoryCreate($name: String!, $color: String) {
+    addCategory(name: $name, color: $color) {
+      id
+      name
+      color
+    }
+  }
+`
+export const GqlHomeCategoryDelete = gql`
+  mutation WebCategoryDelete($id: ID!) {
+    deleteCategory(id: $id) {
       id
       name
       color

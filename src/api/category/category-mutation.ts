@@ -46,4 +46,18 @@ export const CategoryMutation: TSchemaField = {
       return all
     },
   },
+  deleteCategory: {
+    type: GraphQLList(CategorySchema),
+    args: {
+      id: { type: new GraphQLNonNull(GraphQLID) },
+    },
+    resolve: async (_parent, args) => {
+      const deleteCategory = await CategoryModel.findByIdAndRemove(args.id)
+      if (!deleteCategory) {
+        throw new ValidationError("not found")
+      }
+      const all = CategoryModel.find({})
+      return all
+    },
+  },
 }

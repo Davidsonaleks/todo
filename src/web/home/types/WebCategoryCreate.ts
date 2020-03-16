@@ -19,4 +19,5 @@ export interface WebCategoryCreate {
 
 export interface WebCategoryCreateVariables {
   name: string;
+  color?: string | null;
 }

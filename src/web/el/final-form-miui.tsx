@@ -81,6 +81,34 @@ export const FFTextField: React.FC<TFFTextFieldProps> = ({ config, textarea, ...
   )
 }
 
+type TFFColorPickerProps = {
+  name: string
+  config?: UseFieldConfig<any>
+  textarea?: boolean
+} & TextFieldProps &
+  TextareaHTMLAttributes<HTMLTextAreaElement>
+
+export const FFColorPicker: React.FC<TFFColorPickerProps> = ({ config, textarea, ...rest }) => {
+  const field = useField(rest.name, { parse: value => value, ...config })
+  const {
+    input: { name, onChange, value, type, ...restInput },
+    meta,
+  } = field
+  const errors = get_errors(meta)
+  return (
+    <TextField
+      multiline={textarea}
+      name={name}
+      helperText={errors !== null && <Errors errors={errors} />}
+      error={errors !== null}
+      inputProps={restInput}
+      onChange={onChange}
+      value={value === null ? "" : value}
+      {...rest}
+    />
+  )
+}
+
 type T_FF_CheckboxProps = {
   field: FieldRenderProps<string, HTMLInputElement | HTMLTextAreaElement>
 } & CheckboxProps

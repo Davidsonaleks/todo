@@ -3,22 +3,20 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: WebCategoryUpdate
+// GraphQL mutation operation: WebCategoryDelete
 // ====================================================
 
-export interface WebCategoryUpdate_updateCategory {
+export interface WebCategoryDelete_deleteCategory {
   __typename: "Category";
   id: string;
   name: string;
   color: string | null;
 }
 
-export interface WebCategoryUpdate {
-  updateCategory: (WebCategoryUpdate_updateCategory | null)[] | null;
+export interface WebCategoryDelete {
+  deleteCategory: (WebCategoryDelete_deleteCategory | null)[] | null;
 }
 
-export interface WebCategoryUpdateVariables {
-  name: string;
+export interface WebCategoryDeleteVariables {
   id: string;
-  color?: string | null;
 }

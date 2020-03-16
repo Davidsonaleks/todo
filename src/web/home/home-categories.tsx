@@ -8,19 +8,22 @@ import {
   Typography,
   useTheme,
 } from "@material-ui/core"
+import AddIcon from "@material-ui/icons/Add"
 import ColorizeIcon from "@material-ui/icons/Colorize"
+import DeleteIcon from "@material-ui/icons/Delete"
 import SaveIcon from "@material-ui/icons/Save"
 import { useObserver } from "mobx-react-lite"
 import React, { FC, useState } from "react"
 import { ChromePicker, ColorResult } from "react-color"
-import { Form, FormRenderProps, FormSpy } from "react-final-form"
+import { Form, FormRenderProps, FormSpy, useField } from "react-final-form"
 import { useApollo, useUI } from "../../di"
 import { CREATED_ID } from "../../util/common"
 import { FFTextField } from "../el/final-form-miui"
 import { TTheme } from "../theme"
 import { useHomeContext } from "./home-ctx"
-import { GqlHomeCategoryCreate, GqlHomeCategoryUpdate } from "./home-query"
+import { GqlHomeCategoryCreate, GqlHomeCategoryDelete, GqlHomeCategoryUpdate } from "./home-query"
 import { WebCategoryCreate, WebCategoryCreateVariables } from "./types/WebCategoryCreate"
+import { WebCategoryDelete, WebCategoryDeleteVariables } from "./types/WebCategoryDelete"
 import { WebCategoryUpdate, WebCategoryUpdateVariables } from "./types/WebCategoryUpdate"
 import { WebHome_categories } from "./types/WebHome"
 
@@ -93,7 +96,7 @@ export const HomeCategory: FC<THomeCategoryProps> = ({ category }) => {
         variables: {
           id: category.id,
           name: values.name,
-          //color: values.color,
+          color: values.color,
         },
       })
       if (r.data && r.data.updateCategory) {
@@ -115,6 +118,7 @@ export const HomeCategory: FC<THomeCategoryProps> = ({ category }) => {
         mutation: GqlHomeCategoryCreate,
         variables: {
           name: values.name,
+          color: values.color,
         },
       })
       if (r.data && r.data.addCategory) {
@@ -128,10 +132,38 @@ export const HomeCategory: FC<THomeCategoryProps> = ({ category }) => {
       console.error(e)
     }
   }
+
+  const deleteCategory = async () => {
+    ui.setLocker(true)
+    try {
+      const r = await apollo.mutate<WebCategoryDelete, WebCategoryDeleteVariables>({
+        mutation: GqlHomeCategoryDelete,
+        variables: {
+          id: category.id,
+        },
+      })
+      if (r.data && r.data.deleteCategory) {
+        const cat = r.data.deleteCategory.filter(item => item && item) as WebHome_categories[]
+        categories_model.setCategories(cat)
+      }
+      ui.setLocker(false)
+      setPopup(false)
+    } catch (e) {
+      ui.setLocker(false)
+      console.error(e)
+    }
+  }
+
   return useObserver(() => (
     <>
-      <div className={classes.category} onClick={() => setPopup(true)}>
-        <Typography variant="body2">{category.name}</Typography>
+      <div
+        className={classes.category}
+        style={category.color ? { background: category.color } : undefined}
+        onClick={() => setPopup(true)}
+      >
+        <Typography variant="body2" className={classes.name}>
+          {category.id === CREATED_ID ? <AddIcon /> : category.name}
+        </Typography>
       </div>
       <Dialog open={isPopup} onClose={() => setPopup(false)}>
         <DialogTitle className={classes.title}>
@@ -141,9 +173,10 @@ export const HomeCategory: FC<THomeCategoryProps> = ({ category }) => {
           <Form
             initialValues={category}
             onSubmit={category.id === CREATED_ID ? createCategory : (updateCategory as any)}
-            // validate={validate as any}
             subscription={{ submitting: true }}
-            component={HomeCategoryFields}
+            render={props => {
+              return <HomeCategoryFields {...props} deleteCategory={deleteCategory} />
+            }}
           />
         </DialogContent>
       </Dialog>
@@ -182,48 +215,71 @@ const useHomeCategoryStyles = makeStyles<TTheme>(
       title: {
         textAlign: "center",
       },
+      name: {
+        color: "#fff",
+        fontWeight: "bold",
+      },
     }
   },
   { name: HomeCategory.displayName }
 )
 
-export const HomeCategoryFields: FC<FormRenderProps> = ({ handleSubmit }) => {
-  const theme = useTheme()
+type TButtonDelete = {
+  deleteCategory?: () => Promise<void>
+}
+
+export const HomeCategoryFields: FC<FormRenderProps<WebHome_categories> & TButtonDelete> = ({
+  handleSubmit,
+  deleteCategory,
+}) => {
   const classes = useHomeCategoryFieldsStyles()
   const [isPopup, setPopup] = useState<boolean>(false)
-  const [color, setColor] = useState<string>(theme.palette.primary.main)
-  // console.log(name)
+  const colorField = useField("color").input
+  const colortest = useField("color")
+  const [color, setColor] = useState<string>(colorField.value)
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
-      <FFTextField name="name" label="name" />
+      <FFTextField name="name" label="name" required />
       <Grid container alignItems="center" spacing={1}>
         <Grid item>
           <FFTextField name="color" label="color" value={color} />
         </Grid>
         <Grid item>
-          <Button onClick={() => setPopup(!isPopup)}>
+          <Button onClick={() => setPopup(!isPopup)} color="default">
             <ColorizeIcon />
           </Button>
         </Grid>
         {isPopup && (
           <ChromePicker
             color={color}
-            onChangeComplete={(color: ColorResult) => setColor(color.hex)}
+            onChangeComplete={(color: ColorResult) => {
+              setColor(color.hex)
+              colortest.onChange(color.hex)
+            }}
           />
         )}
       </Grid>
-
       <FormSpy>
         {({ hasValidationErrors, submitting, pristine }) => (
-          <Button
-            type="submit"
-            variant="contained"
-            disabled={hasValidationErrors || submitting || pristine}
-            color="primary"
-            className={classes.button}
-          >
-            <SaveIcon />
-          </Button>
+          <div className={classes.buttons}>
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={hasValidationErrors || submitting || pristine}
+              color="primary"
+              className={classes.button}
+            >
+              <SaveIcon />
+            </Button>
+            <Button
+              variant="contained"
+              onClick={deleteCategory}
+              color="secondary"
+              className={classes.button}
+            >
+              <DeleteIcon />
+            </Button>
+          </div>
         )}
       </FormSpy>
     </form>
@@ -237,6 +293,10 @@ const useHomeCategoryFieldsStyles = makeStyles<TTheme>(
       button: {
         marginTop: theme.spacing(2),
         marginBottom: theme.spacing(1),
+      },
+      buttons: {
+        display: "flex",
+        justifyContent: "space-between",
       },
     }
   },
