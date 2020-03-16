@@ -1,8 +1,18 @@
 import { createMuiTheme, Theme } from "@material-ui/core"
 
+const colors = {
+  blue: {
+    dark: "#333",
+    light: "#3366ff",
+  },
+  background: {
+    dark: "#212121",
+    light: "#ECEFF1",
+  },
+}
+
 //colors
 //const background = "#f3f5f9"
-const blue = "#3366ff"
 const white = "#fff"
 
 //gap
@@ -31,20 +41,23 @@ const getCustomRakebackTheme = (): TCustomRakebackTheme => {
 
 export type TTheme = Theme & { custom: TCustomRakebackTheme }
 
-export const getMuiTheme = (): TTheme => {
+export const getMuiTheme = (mode: "dark" | "light"): TTheme => {
   const custom = getCustomRakebackTheme()
   return {
     custom,
-    ...getTheme(),
+    ...getTheme(mode),
   }
 }
 
-export const getTheme = () => {
+export const getTheme = (mode: "dark" | "light") => {
   return createMuiTheme({
     spacing,
     palette: {
       primary: {
-        main: blue,
+        main: colors.blue[mode],
+      },
+      background: {
+        default: colors.background[mode],
       },
     },
     mixins: {},
