@@ -45,12 +45,12 @@ const useStyles = makeStyles<TTheme>(
   theme => {
     return {
       root: {
-        background: theme.palette.primary.main,
+        //background: theme.palette.primary.main,
       },
       slider: {
         display: "flex",
         alignItems: "center",
-        background: theme.palette.primary.main,
+        //background: theme.palette.primary.main,
         padding: `${theme.spacing(4)}px 0`,
         position: "relative",
         scrollSnapType: "x mandatory",

@@ -1,5 +1,7 @@
-import { makeStyles } from "@material-ui/core"
+import { AppBar, makeStyles, Toolbar, Typography } from "@material-ui/core"
+import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects"
 import MenuIcon from "@material-ui/icons/Menu"
+import clsx from "clsx"
 import { useObserver } from "mobx-react-lite"
 import React, { FC } from "react"
 import { useUI } from "../../di"
@@ -10,14 +12,25 @@ export const Header: FC = () => {
   const classes = useStyles()
   const ui = useUI()
   const openMenu = () => {
-    ui.isMobileMenu = !ui.isMobileMenu
+    ui.setMobileMenu(true)
+  }
+  const changeTheme = () => {
+    ui.setDarkTheme(!ui.isDarkTheme)
   }
   return useObserver(() => (
-    <div className={classes.root}>
-      <PageInner component="nav">
-        <MenuIcon className={classes.icon2} onClick={openMenu} />
-      </PageInner>
-    </div>
+    <AppBar position="static">
+      <Toolbar>
+        <PageInner component="nav" className={clsx(classes.flex, classes.root)}>
+          <div className={classes.flex}>
+            <MenuIcon className={classes.icon2} onClick={openMenu} />
+            <Typography variant="h6" className={classes.title}>
+              Tasker
+            </Typography>
+          </div>
+          <EmojiObjectsIcon className={classes.icon2} onClick={changeTheme} />
+        </PageInner>
+      </Toolbar>
+    </AppBar>
   ))
 }
 Header.displayName = "Header"
@@ -27,20 +40,19 @@ const useStyles = makeStyles<TTheme>(
     return {
       root: {
         width: "100%",
-        display: "flex",
-        alignItems: "center",
-        height: "52px",
-        backgroundColor: theme.palette.primary.main,
-      },
-      icon: {
-        width: "22px",
-        height: "22px",
-        fill: theme.custom.colors.white,
+        justifyContent: "space-between",
       },
       icon2: {
-        width: "30px",
-        height: "30px",
+        width: "26px",
+        height: "26px",
         fill: theme.custom.colors.white,
+      },
+      flex: {
+        display: "flex",
+        alignItems: "center",
+      },
+      title: {
+        marginLeft: theme.spacing(2),
       },
     }
   },
