@@ -9,8 +9,10 @@ export const CategorySchema = new GraphQLObjectType({
     color: { type: GraphQLString },
   }),
 })
-const t = new Schema({
+
+export const CategoryMongooseSchema = new Schema({
   name: { type: String },
   color: { type: String },
 })
-export const CategoryModel = model("category", t)
+
+export const CategoryModel = model("Category", CategoryMongooseSchema)

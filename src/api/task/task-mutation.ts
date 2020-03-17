@@ -9,11 +9,13 @@ export const TaskMutation: TSchemaField = {
     args: {
       name: { type: new GraphQLNonNull(GraphQLString) },
       isDone: { type: new GraphQLNonNull(GraphQLBoolean) },
+      category_id: { type: GraphQLID },
     },
-    resolve: async (_parent, { isDone, name }) => {
+    resolve: async (_parent, { isDone, name, category_id }) => {
       const task = new TaskModel({
         name,
         isDone,
+        category: category_id,
       })
       const newTask = await task.save()
       if (!newTask) {
