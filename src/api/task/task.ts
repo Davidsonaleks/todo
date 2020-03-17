@@ -6,9 +6,10 @@ import {
   GraphQLString,
 } from "graphql"
 import { model, Schema } from "mongoose"
+import { TGraphQLObjectType } from "../../types"
 import { CategoryModel, CategorySchema } from "../category/category"
 
-export const TaskSchema = new GraphQLObjectType({
+export const TaskSchema: TGraphQLObjectType = new GraphQLObjectType({
   name: "Task",
   fields: () => ({
     id: { type: new GraphQLNonNull(GraphQLID) },
