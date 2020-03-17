@@ -15,16 +15,18 @@ export const HomeCategory: FC<THomeCategoryProps> = ({ category }) => {
   const [isPopup, setPopup] = useState<boolean>(false)
 
   return (
-    <div
-      className={classes.category}
-      style={category.color ? { background: category.color } : undefined}
-      onClick={() => setPopup(true)}
-    >
-      <Typography variant="body2" className={classes.name}>
-        {category.id === CREATED_ID ? <AddIcon /> : category.name}
-      </Typography>
+    <>
+      <div
+        className={classes.category}
+        style={category.color ? { background: category.color } : undefined}
+        onClick={() => setPopup(true)}
+      >
+        <Typography variant="body2" className={classes.name}>
+          {category.id === CREATED_ID ? <AddIcon /> : category.name}
+        </Typography>
+      </div>
       <HomeCategoryForm isPopup={isPopup} setPopup={setPopup} category={category} />
-    </div>
+    </>
   )
 }
 HomeCategory.displayName = "HomeCategory"

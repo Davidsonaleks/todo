@@ -24,7 +24,6 @@ export const HomeCategoryForm: FC<THomeCategoryProps> = ({ category, isPopup, se
   const apollo = useApollo()
   const ui = useUI()
   const { categories_model } = useHomeContext()
-  console.log(isPopup, "isPopup")
 
   const updateCategory = async (values: WebHome_categories) => {
     ui.setLocker(true)

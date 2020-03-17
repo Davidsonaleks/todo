@@ -1,4 +1,4 @@
-import { Button, Grid, makeStyles } from "@material-ui/core"
+import { Button, makeStyles } from "@material-ui/core"
 import ColorizeIcon from "@material-ui/icons/Colorize"
 import DeleteIcon from "@material-ui/icons/Delete"
 import SaveIcon from "@material-ui/icons/Save"
@@ -9,41 +9,34 @@ import { FFTextField } from "../../el/final-form-miui"
 import { TTheme } from "../../theme"
 import { WebHome_categories } from "./../types/WebHome"
 
-type TButtonDelete = {
+type THomeCategoryFieldsProps = {
   deleteCategory?: () => Promise<void>
 }
 
-export const HomeCategoryFields: FC<FormRenderProps<WebHome_categories> & TButtonDelete> = ({
-  handleSubmit,
-  deleteCategory,
-}) => {
+type THomeCategoryFields = FormRenderProps<WebHome_categories> & THomeCategoryFieldsProps
+
+export const HomeCategoryFields: FC<THomeCategoryFields> = props => {
+  const { handleSubmit, deleteCategory } = props
   const classes = useHomeCategoryFieldsStyles()
   const [isPopup, setPopup] = useState<boolean>(false)
-  const colorField = useField("color").input
-  const colortest = useField("color")
-  const [color, setColor] = useState<string>(colorField.value)
+  const colorInput = useField("color").input
+  const colorValue = useField("color").input.value
+
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
       <FFTextField name="name" label="name" required />
-      <Grid container alignItems="center" spacing={1}>
-        <Grid item>
-          <FFTextField name="color" label="color" value={color} />
-        </Grid>
-        <Grid item>
-          <Button onClick={() => setPopup(!isPopup)} color="default">
-            <ColorizeIcon />
-          </Button>
-        </Grid>
-        {isPopup && (
-          <ChromePicker
-            color={color}
-            onChangeComplete={(color: ColorResult) => {
-              setColor(color.hex)
-              colortest.onChange(color.hex)
-            }}
-          />
-        )}
-      </Grid>
+
+      <FFTextField name="color" label="color" />
+
+      {isPopup && (
+        <ChromePicker
+          color={colorValue}
+          onChangeComplete={(color: ColorResult) => {
+            colorInput.onChange({ target: { value: color.hex } })
+          }}
+        />
+      )}
+
       <FormSpy>
         {({ hasValidationErrors, submitting, pristine }) => (
           <div className={classes.buttons}>
@@ -55,6 +48,14 @@ export const HomeCategoryFields: FC<FormRenderProps<WebHome_categories> & TButto
               className={classes.button}
             >
               <SaveIcon />
+            </Button>
+            <Button
+              onClick={() => setPopup(!isPopup)}
+              color={"primary"}
+              variant="contained"
+              className={classes.button}
+            >
+              <ColorizeIcon />
             </Button>
             <Button
               variant="contained"
