@@ -1,4 +1,3 @@
-import { ApolloQueryResult } from "apollo-client"
 import { TRouteComponentProps } from "chyk"
 import React, { FC, useMemo, useState } from "react"
 import { useApollo } from "../../di"
@@ -11,11 +10,14 @@ import { GqlHome, GqlHomeCreate } from "./home-query"
 import { WebAddTask, WebAddTaskVariables } from "./types/WebAddTask"
 import { WebHome, WebHome_categories } from "./types/WebHome"
 
-type THomeData = ApolloQueryResult<WebHome>
-export const homeLoader: TLoadData<THomeData> = async (_, { apollo }) =>
-  apollo.query({
+type THomeData = { data: WebHome }
+export const homeLoader: TLoadData<THomeData | null> = async (_, { apollo, userInterface }) => {
+  userInterface.setHeaderTitle("Tasker")
+  const r = await apollo.query({
     query: GqlHome,
   })
+  return { data: r.data }
+}
 
 type THomeProps = TRouteComponentProps<THomeData>
 export const Home: FC<THomeProps> = ({ data }) => {

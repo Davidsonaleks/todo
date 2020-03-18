@@ -23,8 +23,8 @@ export const Header: FC = () => {
         <PageInner component="nav" className={clsx(classes.flex, classes.root)}>
           <div className={classes.flex}>
             <MenuIcon className={classes.icon2} onClick={openMenu} />
-            <Typography variant="h6" className={classes.title}>
-              Tasker
+            <Typography variant="h2" className={classes.title}>
+              {ui.headerTitle}
             </Typography>
           </div>
           <EmojiObjectsIcon className={classes.icon2} onClick={changeTheme} />

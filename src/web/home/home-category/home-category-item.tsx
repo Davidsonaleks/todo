@@ -1,6 +1,6 @@
 import { makeStyles, Typography } from "@material-ui/core"
 import AddIcon from "@material-ui/icons/Add"
-import React, { FC, useState } from "react"
+import React, { FC, useEffect, useState } from "react"
 import { CREATED_ID } from "../../../util/common"
 import { TTheme } from "../../theme"
 import { WebHome_categories } from "../types/WebHome"
@@ -13,6 +13,9 @@ type THomeCategoryProps = {
 export const HomeCategory: FC<THomeCategoryProps> = ({ category }) => {
   const classes = useHomeCategoryStyles()
   const [isPopup, setPopup] = useState<boolean>(false)
+  useEffect(() => {
+    return () => (() => setPopup(false))()
+  }, [])
 
   return (
     <div className={classes.root}>
@@ -50,7 +53,6 @@ const useHomeCategoryStyles = makeStyles<TTheme>(
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-
         cursor: "pointer",
         "&:last-child": {
           position: "relative",

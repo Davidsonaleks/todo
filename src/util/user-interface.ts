@@ -15,5 +15,10 @@ export class WebUi {
   setDarkTheme(b: boolean) {
     this.isDarkTheme = b
   }
+
+  @observable headerTitle: string = "Project"
+  setHeaderTitle(str: string) {
+    this.headerTitle = str
+  }
 }
 export const userInterface = new WebUi()

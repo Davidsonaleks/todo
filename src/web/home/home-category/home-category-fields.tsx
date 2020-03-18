@@ -57,14 +57,16 @@ export const HomeCategoryFields: FC<THomeCategoryFields> = props => {
             >
               <ColorizeIcon />
             </Button>
-            <Button
-              variant="contained"
-              onClick={deleteCategory}
-              color="secondary"
-              className={classes.button}
-            >
-              <DeleteIcon />
-            </Button>
+            {deleteCategory && (
+              <Button
+                variant="contained"
+                onClick={deleteCategory}
+                color="secondary"
+                className={classes.button}
+              >
+                <DeleteIcon />
+              </Button>
+            )}
           </div>
         )}
       </FormSpy>

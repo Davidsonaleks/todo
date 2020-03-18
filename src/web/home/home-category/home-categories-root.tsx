@@ -22,7 +22,6 @@ export const HomeCategories: FC = () => {
       <PageInner>
         <Typography variant="h2">Категории</Typography>
       </PageInner>
-
       <div className={classes.slider}>
         {categories_model.categories.map(category => (
           <HomeCategory key={category.id} category={category} />
@@ -43,7 +42,6 @@ const useStyles = makeStyles<TTheme>(
       slider: {
         display: "flex",
         alignItems: "center",
-        //background: theme.palette.primary.main,
         padding: `${theme.spacing(4)}px 0`,
         position: "relative",
         scrollSnapType: "x mandatory",

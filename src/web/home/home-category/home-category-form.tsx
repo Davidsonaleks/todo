@@ -83,8 +83,8 @@ export const HomeCategoryForm: FC<THomeCategoryProps> = ({ category, isPopup, se
         const cat = r.data.deleteCategory.filter(item => item && item) as WebHome_categories[]
         categories_model.setCategories(cat)
       }
-      ui.setLocker(false)
       setPopup(false)
+      ui.setLocker(false)
     } catch (e) {
       ui.setLocker(false)
       console.error(e)
@@ -102,7 +102,12 @@ export const HomeCategoryForm: FC<THomeCategoryProps> = ({ category, isPopup, se
           onSubmit={category.id === CREATED_ID ? createCategory : (updateCategory as any)}
           subscription={{ submitting: true }}
           render={props => {
-            return <HomeCategoryFields {...props} deleteCategory={deleteCategory} />
+            return (
+              <HomeCategoryFields
+                {...props}
+                deleteCategory={category.id !== CREATED_ID ? deleteCategory : undefined}
+              />
+            )
           }}
         />
       </DialogContent>
