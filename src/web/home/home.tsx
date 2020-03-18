@@ -1,19 +1,20 @@
+import { ApolloQueryResult } from "apollo-client"
 import { TRouteComponentProps } from "chyk"
-import React, { FC, useMemo, useState } from "react"
-import { useApollo } from "../../di"
+import React, { FC, useMemo } from "react"
 import { TLoadData } from "../../types"
 import { PageInner } from "../el/page-inner"
 import { HomeCategoriesModel } from "./home-categories-model"
 import { HomeCategories } from "./home-category/home-categories-root"
 import { HomeContext } from "./home-ctx"
-import { GqlHome, GqlHomeCreate } from "./home-query"
-import { WebAddTask, WebAddTaskVariables } from "./types/WebAddTask"
-import { WebHome, WebHome_categories } from "./types/WebHome"
+import { GqlHome } from "./home-query"
+import { HomeTasksModel } from "./home-tasks-model"
+import { HomeTasks } from "./home-tasks/home-tasks-root"
+import { WebHome, WebHome_categories, WebHome_tasks } from "./types/WebHome"
 
 type THomeData = { data: WebHome }
 export const homeLoader: TLoadData<THomeData | null> = async (_, { apollo, userInterface }) => {
   userInterface.setHeaderTitle("Tasker")
-  const r = await apollo.query({
+  const r: ApolloQueryResult<WebHome> = await apollo.query({
     query: GqlHome,
   })
   return { data: r.data }
@@ -21,19 +22,6 @@ export const homeLoader: TLoadData<THomeData | null> = async (_, { apollo, userI
 
 type THomeProps = TRouteComponentProps<THomeData>
 export const Home: FC<THomeProps> = ({ data }) => {
-  const { tasks } = data
-  const apollo = useApollo()
-  const [value, setValue] = useState<string>("")
-  const create = async () => {
-    await apollo.mutate<WebAddTask, WebAddTaskVariables>({
-      mutation: GqlHomeCreate,
-      variables: {
-        name: value,
-        isDone: false,
-      },
-    })
-  }
-
   const categories_model = useMemo(() => {
     const categories_model = new HomeCategoriesModel()
     if (data.categories) {
@@ -42,24 +30,21 @@ export const Home: FC<THomeProps> = ({ data }) => {
     }
     return categories_model
   }, [])
+
+  const tasks_model = useMemo(() => {
+    const tasks_model = new HomeTasksModel()
+    if (data.tasks) {
+      const tasks = data.tasks.filter(item => item && item) as WebHome_tasks[]
+      tasks_model.setTasks(tasks)
+    }
+    return tasks_model
+  }, [])
+
   return (
-    <HomeContext.Provider value={{ categories_model }}>
+    <HomeContext.Provider value={{ categories_model, tasks_model }}>
       <HomeCategories />
       <PageInner>
-        <div>HOME</div>
-        <br />
-        <br />
-        <br />
-        <br />
-        {tasks &&
-          tasks.map(task => (
-            <div key={task!.id} style={{ display: "flex" }}>
-              <div>{task!.name}</div>
-            </div>
-          ))}
-        NEW TASK
-        <input value={value} onChange={e => setValue(e.target.value)} />
-        <button onClick={create}>Go</button>
+        <HomeTasks />
       </PageInner>
     </HomeContext.Provider>
   )

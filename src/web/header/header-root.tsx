@@ -53,6 +53,7 @@ const useStyles = makeStyles<TTheme>(
       },
       title: {
         marginLeft: theme.spacing(2),
+        color: theme.custom.colors.white,
       },
       toolbar: {
         padding: 0,

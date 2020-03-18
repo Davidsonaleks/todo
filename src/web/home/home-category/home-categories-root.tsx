@@ -20,7 +20,9 @@ export const HomeCategories: FC = () => {
   return (
     <div className={classes.root}>
       <PageInner>
-        <Typography variant="h2">Категории</Typography>
+        <Typography variant="h2" color="primary">
+          Категории
+        </Typography>
       </PageInner>
       <div className={classes.slider}>
         {categories_model.categories.map(category => (

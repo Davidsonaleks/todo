@@ -43,14 +43,14 @@ export const TaskMutation: TSchemaField = {
     },
   },
   updateTask: {
-    type: TaskSchema,
+    type: GraphQLList(TaskSchema),
     args: {
       id: { type: new GraphQLNonNull(GraphQLID) },
       name: { type: new GraphQLNonNull(GraphQLString) },
       isDone: { type: new GraphQLNonNull(GraphQLBoolean) },
     },
-    resolve(_parent, args) {
-      const updateTask = TaskModel.findByIdAndUpdate(
+    resolve: async (_parent, args) => {
+      const updateTask = await TaskModel.findByIdAndUpdate(
         args.id,
         {
           name: args.name,
@@ -61,7 +61,11 @@ export const TaskMutation: TSchemaField = {
       if (!updateTask) {
         throw new ValidationError("not found")
       }
-      return updateTask
+      const tasks_list = TaskModel.find({}, err => {
+        if (err) throw err
+      })
+
+      return tasks_list
     },
   },
 }

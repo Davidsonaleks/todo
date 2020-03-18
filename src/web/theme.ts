@@ -1,14 +1,29 @@
 import { createMuiTheme, Theme } from "@material-ui/core"
 import { TypographyStyleOptions } from "@material-ui/core/styles/createTypography"
 
-const colors = {
+type TColors = {
+  [key: string]: {
+    light: string
+    dark: string
+  }
+}
+
+const colors: TColors = {
   blue: {
     light: "#3366ff",
     dark: "#333",
   },
   background: {
-    light: "#fff",
+    light: "#f1f1f1",
     dark: "#212121",
+  },
+  whiteBlack: {
+    light: "#000",
+    dark: "#fff",
+  },
+  cardBackground: {
+    light: "#fff",
+    dark: "#333",
   },
 }
 
@@ -94,31 +109,35 @@ type TCustomRakebackTheme = {
   }
   colors: {
     white: string
+    whiteBlack: string
   }
 }
 
-const getCustomRakebackTheme = (): TCustomRakebackTheme => {
+export type TTheme = Theme & { custom: TCustomRakebackTheme }
+
+const getCustomRakebackTheme = (mode: TMode): TCustomRakebackTheme => {
   return {
     gap: {
       innerPadding,
     },
     colors: {
       white,
+      whiteBlack: colors.whiteBlack[mode],
     },
   }
 }
 
-export type TTheme = Theme & { custom: TCustomRakebackTheme }
+type TMode = "dark" | "light"
 
-export const getMuiTheme = (mode: "dark" | "light"): TTheme => {
-  const custom = getCustomRakebackTheme()
+export const getMuiTheme = (mode: TMode): TTheme => {
+  const custom = getCustomRakebackTheme(mode)
   return {
     custom,
     ...getTheme(mode),
   }
 }
 
-export const getTheme = (mode: "dark" | "light") => {
+export const getTheme = (mode: TMode) => {
   return createMuiTheme({
     spacing,
     palette: {
@@ -144,7 +163,23 @@ export const getTheme = (mode: "dark" | "light") => {
       button,
       overline,
     },
-    overrides: {},
+    overrides: {
+      MuiTypography: {
+        colorPrimary: {
+          color: colors.whiteBlack[mode],
+        },
+      },
+      MuiCard: {
+        root: {
+          backgroundColor: colors.cardBackground[mode],
+        },
+      },
+      MuiCardContent: {
+        root: {
+          padding: `${spacing * 2}px ${innerPadding}px`,
+        },
+      },
+    },
     props: {
       MuiTextField: {
         variant: "outlined",
@@ -156,7 +191,10 @@ export const getTheme = (mode: "dark" | "light") => {
         color: "primary",
       },
       MuiGrid: {
-        spacing: 1,
+        spacing: 2,
+      },
+      MuiTypography: {
+        color: "primary",
       },
     },
   })

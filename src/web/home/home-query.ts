@@ -6,6 +6,9 @@ export const GqlHome = gql`
       id
       name
       isDone
+      category {
+        id
+      }
     }
     categories {
       id
@@ -31,6 +34,19 @@ export const GqlHomeCreate = gql`
       id
       name
       isDone
+    }
+  }
+`
+
+export const GqlHomeUpdateTask = gql`
+  mutation WebUpdateTask($id: ID!, $name: String!, $isDone: Boolean!) {
+    updateTask(id: $id, name: $name, isDone: $isDone) {
+      id
+      name
+      isDone
+      category {
+        id
+      }
     }
   }
 `
