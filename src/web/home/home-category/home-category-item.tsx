@@ -15,18 +15,18 @@ export const HomeCategory: FC<THomeCategoryProps> = ({ category }) => {
   const [isPopup, setPopup] = useState<boolean>(false)
 
   return (
-    <>
+    <div className={classes.root}>
       <div
         className={classes.category}
         style={category.color ? { background: category.color } : undefined}
         onClick={() => setPopup(true)}
       >
         <Typography variant="body2" className={classes.name}>
-          {category.id === CREATED_ID ? <AddIcon /> : category.name}
+          {category.id === CREATED_ID ? <AddIcon className={classes.plusIcon} /> : category.name}
         </Typography>
       </div>
       <HomeCategoryForm isPopup={isPopup} setPopup={setPopup} category={category} />
-    </>
+    </div>
   )
 }
 HomeCategory.displayName = "HomeCategory"
@@ -35,6 +35,12 @@ const size = 70
 const useHomeCategoryStyles = makeStyles<TTheme>(
   theme => {
     return {
+      root: {
+        width: size + theme.custom.gap.innerPadding,
+        paddingLeft: theme.custom.gap.innerPadding,
+        height: size,
+        scrollSnapAlign: "start",
+      },
       category: {
         minWidth: size,
         minHeight: size,
@@ -44,8 +50,8 @@ const useHomeCategoryStyles = makeStyles<TTheme>(
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        marginRight: theme.custom.gap.innerPadding,
-        scrollSnapAlign: "start",
+
+        cursor: "pointer",
         "&:last-child": {
           position: "relative",
           "&:after": {
@@ -61,6 +67,10 @@ const useHomeCategoryStyles = makeStyles<TTheme>(
       name: {
         color: "#fff",
         fontWeight: "bold",
+      },
+      plusIcon: {
+        width: "30px",
+        height: "30px",
       },
     }
   },

@@ -1,6 +1,7 @@
-import { makeStyles, useTheme } from "@material-ui/core"
+import { makeStyles, Typography, useTheme } from "@material-ui/core"
 import React, { FC } from "react"
 import { CREATED_ID } from "../../../util/common"
+import { PageInner } from "../../el/page-inner"
 import { TTheme } from "../../theme"
 import { useHomeContext } from "./../home-ctx"
 import { WebHome_categories } from "./../types/WebHome"
@@ -18,6 +19,10 @@ export const HomeCategories: FC = () => {
   }
   return (
     <div className={classes.root}>
+      <PageInner>
+        <Typography variant="h2">Категории</Typography>
+      </PageInner>
+
       <div className={classes.slider}>
         {categories_model.categories.map(category => (
           <HomeCategory key={category.id} category={category} />
@@ -33,7 +38,7 @@ const useStyles = makeStyles<TTheme>(
   theme => {
     return {
       root: {
-        //background: theme.palette.primary.main,
+        paddingTop: theme.spacing(2),
       },
       slider: {
         display: "flex",
@@ -49,6 +54,10 @@ const useStyles = makeStyles<TTheme>(
         scrollbarWidth: "none",
         "&::-webkit-scrollbar": {
           display: "none",
+        },
+        [theme.breakpoints.up("sm")]: {
+          maxWidth: "1280px",
+          margin: "0 auto",
         },
       },
     }

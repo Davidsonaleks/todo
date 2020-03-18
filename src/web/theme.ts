@@ -1,4 +1,5 @@
 import { createMuiTheme, Theme } from "@material-ui/core"
+import { TypographyStyleOptions } from "@material-ui/core/styles/createTypography"
 
 const colors = {
   blue: {
@@ -18,6 +19,74 @@ const white = "#fff"
 //gap
 const spacing = 12
 const innerPadding = 18
+
+//breakpoints
+const breakpoints = { xs: 0, sm: 600, md: 960, lg: 1280, xl: 1920 }
+const smUp = `@media (min-width: ${breakpoints.sm}px)`
+
+//fonts
+const h1: TypographyStyleOptions = {
+  fontWeight: "bold",
+  fontSize: "36px",
+  lineHeight: "42px",
+  [smUp]: {
+    fontSize: "48px",
+    lineHeight: "65px",
+  },
+}
+const h2: TypographyStyleOptions = {
+  fontWeight: 600,
+  fontSize: "24px",
+  lineHeight: "33px",
+}
+const h3: TypographyStyleOptions = {
+  fontWeight: "bold",
+  fontSize: "18px",
+  lineHeight: "25px",
+}
+const h4: TypographyStyleOptions = {
+  fontWeight: 600,
+  fontSize: "18px",
+  lineHeight: "25px",
+}
+const h5: TypographyStyleOptions = {
+  fontWeight: 600,
+  fontSize: "16px",
+  lineHeight: "22px",
+}
+const h6: TypographyStyleOptions = {
+  fontWeight: 600,
+  fontSize: "12px",
+  lineHeight: "16px",
+}
+const body1: TypographyStyleOptions = {
+  fontSize: "16px",
+  lineHeight: "24px",
+}
+const body2: TypographyStyleOptions = {
+  fontSize: "12px",
+  lineHeight: "16px",
+}
+const button: TypographyStyleOptions = {
+  fontWeight: "bold",
+  fontSize: "16px",
+  lineHeight: "22px",
+}
+const subtitle2: TypographyStyleOptions = {
+  fontWeight: "bold",
+  fontSize: "12px",
+  lineHeight: "16px",
+}
+const subtitle1: TypographyStyleOptions = {
+  fontWeight: 600,
+  fontSize: "14px",
+  lineHeight: "19px",
+}
+const overline: TypographyStyleOptions = {
+  fontStyle: "italic",
+  fontSize: "12px",
+  lineHeight: "16px",
+}
 
 type TCustomRakebackTheme = {
   gap: {
@@ -62,19 +131,18 @@ export const getTheme = (mode: "dark" | "light") => {
     },
     mixins: {},
     typography: {
-      // fontFamily: '"Open Sans",sans-serif',
-      // h1: h1, //Title T1
-      // h2: h2, //Title T2
-      // h3: h3, //Title T3
-      // h4: h4, //Subheader 1
-      // h5: h5, //Subheader 2
-      // h6: h6, //Subheader 3
-      // body1: body1, //Text
-      // body2: body2, //Subtext
-      // subtitle1: subtitle1, //Text Button
-      // subtitle2: subtitle2, //Button 2
-      // button: button, //Button 1
-      // overline: overline, //Caption Date
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      body1,
+      body2,
+      subtitle1,
+      subtitle2,
+      button,
+      overline,
     },
     overrides: {},
     props: {
