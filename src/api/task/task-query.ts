@@ -20,9 +20,14 @@ export const TaskQuery: TSchemaField = {
   tasks: {
     type: GraphQLList(TaskSchema),
     resolve(_parent, _args) {
-      const tasks_list = TaskModel.find({}, err => {
-        if (err) throw err
-      })
+      const tasks_list = TaskModel.find(
+        {},
+        null,
+        { sort: { isDone: false, createdAt: -1 } },
+        err => {
+          if (err) throw err
+        }
+      )
       if (!tasks_list) {
         throw new ValidationError("not found")
       }

@@ -22,9 +22,14 @@ export const TaskMutation: TSchemaField = {
         throw new ValidationError("not found")
       }
 
-      const tasks_list = TaskModel.find({}, err => {
-        if (err) throw err
-      })
+      const tasks_list = TaskModel.find(
+        {},
+        null,
+        { sort: { isDone: false, createdAt: -1 } },
+        err => {
+          if (err) throw err
+        }
+      )
 
       return tasks_list
     },
@@ -61,9 +66,14 @@ export const TaskMutation: TSchemaField = {
       if (!updateTask) {
         throw new ValidationError("not found")
       }
-      const tasks_list = TaskModel.find({}, err => {
-        if (err) throw err
-      })
+      const tasks_list = TaskModel.find(
+        {},
+        null,
+        { sort: { isDone: false, createdAt: -1 } },
+        err => {
+          if (err) throw err
+        }
+      )
 
       return tasks_list
     },

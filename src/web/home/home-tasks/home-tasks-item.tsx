@@ -1,4 +1,5 @@
 import { Card, CardContent, Checkbox, makeStyles, Typography } from "@material-ui/core"
+import clsx from "clsx"
 import { useObserver } from "mobx-react-lite"
 import React, { FC } from "react"
 import { useApollo, useUI } from "../../../di"
@@ -51,9 +52,15 @@ export const HomeTaskItem: FC<THomeTaskItemProps> = ({ task }) => {
         className={classes.categoryBackground}
         style={{ background: category?.color || "transparent" }}
       />
-      <CardContent className={classes.content}>
-        <Typography variant="h5">{task.name}</Typography>
-        <Checkbox checked={task.isDone} onClick={checkBoxChange} color="secondary" />
+      <CardContent className={clsx(classes.content)}>
+        <Typography variant="h5" className={clsx(task.isDone && classes.decoration)}>
+          {task.name}
+        </Typography>
+        <Checkbox
+          checked={task.isDone}
+          onClick={checkBoxChange}
+          style={{ color: category?.color || "inherit" }}
+        />
       </CardContent>
     </Card>
   ))
@@ -75,6 +82,9 @@ const useStyles = makeStyles<TTheme>(
         display: "grid",
         gridTemplateColumns: "1fr 20px",
         alignItems: "center",
+      },
+      decoration: {
+        textDecoration: "line-through",
       },
     }
   },
