@@ -59,3 +59,16 @@ export const GqlHomesUpdateTask = gql`
     }
   }
 `
+
+export const GqlHomesDeleteTask = gql`
+  mutation WebHomeDeleteTask($id: ID!) {
+    removeTask(id: $id) {
+      id
+      name
+      isDone
+      category {
+        id
+      }
+    }
+  }
+`

@@ -35,6 +35,27 @@ export const TaskMutation: TSchemaField = {
     },
   },
   removeTask: {
+    type: new GraphQLList(TaskSchema),
+    args: {
+      id: { type: new GraphQLNonNull(GraphQLID) },
+    },
+    resolve: async (_parent, args) => {
+      const deleteTask = await TaskModel.findByIdAndRemove(args.id)
+      if (!deleteTask) {
+        throw new ValidationError("not found")
+      }
+      const tasks_list = TaskModel.find(
+        {},
+        null,
+        { sort: { isDone: false, createdAt: -1 } },
+        err => {
+          if (err) throw err
+        }
+      )
+      return tasks_list
+    },
+  },
+  removeTaskItem: {
     type: TaskSchema,
     args: {
       id: { type: new GraphQLNonNull(GraphQLID) },
@@ -44,6 +65,7 @@ export const TaskMutation: TSchemaField = {
       if (!deleteTask) {
         throw new ValidationError("not found")
       }
+
       return deleteTask
     },
   },

@@ -15,8 +15,13 @@ import { useApollo, useUI } from "../../../di"
 import { RouterLink } from "../../el/link"
 import { TTheme } from "../../theme"
 import { useHomeContext } from "../home-ctx"
-import { GqlHomesUpdateTask } from "../home-query"
+import { GqlHomesDeleteTask, GqlHomesUpdateTask } from "../home-query"
 import { WebHome_tasks } from "../types/WebHome"
+import {
+  WebHomeDeleteTask,
+  WebHomeDeleteTaskVariables,
+  WebHomeDeleteTask_removeTask,
+} from "../types/WebHomeDeleteTask"
 import {
   WebHomeUpdateTask,
   WebHomeUpdateTaskVariables,
@@ -48,6 +53,28 @@ export const HomeTaskItem: FC<THomeTaskItemProps> = ({ task }) => {
         const tasks = r.data.updateTask.filter(
           item => item && item
         ) as WebHomeUpdateTask_updateTask[]
+        tasks_model.setTasks(tasks)
+      }
+      ui.setLocker(false)
+    } catch (e) {
+      console.error(e)
+      ui.setLocker(false)
+    }
+  }
+
+  const deleteTask = async () => {
+    ui.setLocker(true)
+    try {
+      const r = await apollo.mutate<WebHomeDeleteTask, WebHomeDeleteTaskVariables>({
+        mutation: GqlHomesDeleteTask,
+        variables: {
+          id: task.id,
+        },
+      })
+      if (r.data && r.data.removeTask) {
+        const tasks = r.data.removeTask.filter(
+          item => item && item
+        ) as WebHomeDeleteTask_removeTask[]
         tasks_model.setTasks(tasks)
       }
       ui.setLocker(false)
@@ -92,7 +119,12 @@ export const HomeTaskItem: FC<THomeTaskItemProps> = ({ task }) => {
           <MenuItem>
             <RouterLink to={"/task/" + task.id}>Edit</RouterLink>
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem
+            onClick={() => {
+              deleteTask()
+              handleClose()
+            }}
+          >
             <Typography>Delete</Typography>
           </MenuItem>
         </Menu>
