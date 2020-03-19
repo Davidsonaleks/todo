@@ -1,6 +1,8 @@
 import { createMuiTheme, Theme } from "@material-ui/core"
 import { TypographyStyleOptions } from "@material-ui/core/styles/createTypography"
 
+const blue = "#3366ff"
+
 type TColors = {
   [key: string]: {
     light: string
@@ -10,7 +12,7 @@ type TColors = {
 
 const colors: TColors = {
   blue: {
-    light: "#3366ff",
+    light: blue,
     dark: "#333",
   },
   background: {
@@ -21,9 +23,17 @@ const colors: TColors = {
     light: "#000",
     dark: "#fff",
   },
+  blackWhite: {
+    light: "#fff",
+    dark: "#000",
+  },
   cardBackground: {
     light: "#fff",
     dark: "#333",
+  },
+  inputOutlineBorder: {
+    light: "rgba(0, 0, 0, 0.23)",
+    dark: "rgba(255, 255, 255, 0.23)",
   },
 }
 
@@ -179,7 +189,56 @@ export const getTheme = (mode: TMode) => {
           padding: `${spacing * 2}px ${innerPadding}px`,
         },
       },
+      MuiPaper: {
+        root: {
+          backgroundColor: colors.blackWhite[mode],
+        },
+      },
+      MuiTextField: {
+        root: {
+          color: colors.whiteBlack[mode],
+        },
+      },
+      MuiInputBase: {
+        root: {
+          color: colors.whiteBlack[mode],
+        },
+      },
+      MuiOutlinedInput: {
+        root: {
+          "&:hover": {
+            "& $notchedOutline": {
+              borderColor: colors.whiteBlack[mode],
+            },
+          },
+          "&.Mui-focused": {
+            "& $notchedOutline": {
+              borderColor: blue + " !important",
+            },
+          },
+        },
+        notchedOutline: {
+          borderColor: colors.inputOutlineBorder[mode],
+        },
+      },
+      MuiFormLabel: {
+        root: {
+          color: colors.inputOutlineBorder[mode],
+          "&.Mui-focused": {
+            color: blue,
+          },
+        },
+      },
+      MuiSelect: {
+        select: {
+          "&:not([multiple]) option": {
+            backgroundColor: colors.blackWhite[mode],
+          },
+        },
+      },
     },
+
+    //.MuiSelect-select:not([multiple]) option
     props: {
       MuiTextField: {
         variant: "outlined",
