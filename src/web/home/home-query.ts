@@ -18,39 +18,6 @@ export const GqlHome = gql`
   }
 `
 
-export const GqlTask = gql`
-  query WebTask($id: ID!) {
-    task(id: $id) {
-      id
-      name
-      isDone
-    }
-  }
-`
-
-export const GqlHomeCreate = gql`
-  mutation WebAddTask($name: String!, $isDone: Boolean!) {
-    addNewTask(name: $name, isDone: $isDone) {
-      id
-      name
-      isDone
-    }
-  }
-`
-
-export const GqlHomeUpdateTask = gql`
-  mutation WebUpdateTask($id: ID!, $name: String!, $isDone: Boolean!) {
-    updateTask(id: $id, name: $name, isDone: $isDone) {
-      id
-      name
-      isDone
-      category {
-        id
-      }
-    }
-  }
-`
-
 export const GqlHomeCategoryUpdate = gql`
   mutation WebCategoryUpdate($name: String!, $id: ID!, $color: String) {
     updateCategory(name: $name, id: $id, color: $color) {
@@ -76,6 +43,19 @@ export const GqlHomeCategoryDelete = gql`
       id
       name
       color
+    }
+  }
+`
+
+export const GqlHomesUpdateTask = gql`
+  mutation WebHomeUpdateTask($id: ID!, $isDone: Boolean!) {
+    updateTask(id: $id, isDone: $isDone) {
+      id
+      name
+      isDone
+      category {
+        id
+      }
     }
   }
 `

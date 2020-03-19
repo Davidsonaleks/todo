@@ -1,4 +1,4 @@
-import { Grid, makeStyles } from "@material-ui/core"
+import { Grid, makeStyles, Typography } from "@material-ui/core"
 import { useObserver } from "mobx-react-lite"
 import React, { FC } from "react"
 import { TTheme } from "../../theme"
@@ -10,6 +10,9 @@ export const HomeTasks: FC = () => {
   const { tasks_model } = useHomeContext()
   return useObserver(() => (
     <div className={classes.root}>
+      <Typography variant="h2" color="primary" className={classes.title}>
+        Tasks
+      </Typography>
       <Grid container>
         {tasks_model.tasks.map(task => (
           <Grid item key={task.id} xs={12} sm={6} md={3}>
@@ -23,9 +26,12 @@ export const HomeTasks: FC = () => {
 HomeTasks.displayName = "HomeTasks"
 
 const useStyles = makeStyles<TTheme>(
-  _theme => {
+  theme => {
     return {
       root: {},
+      title: {
+        margin: `${theme.spacing(2)}px 0`,
+      },
     }
   },
   { name: HomeTasks.displayName }

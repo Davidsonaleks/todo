@@ -21,7 +21,7 @@ export const HomeCategories: FC = () => {
     <div className={classes.root}>
       <PageInner>
         <Typography variant="h2" color="primary">
-          Категории
+          Categoties
         </Typography>
       </PageInner>
       <div className={classes.slider}>
@@ -44,7 +44,7 @@ const useStyles = makeStyles<TTheme>(
       slider: {
         display: "flex",
         alignItems: "center",
-        padding: `${theme.spacing(4)}px 0`,
+        padding: `${theme.spacing(2)}px 0`,
         position: "relative",
         scrollSnapType: "x mandatory",
         overflowX: "auto",

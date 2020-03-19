@@ -1,17 +1,27 @@
-import { Card, CardContent, Checkbox, makeStyles, Typography } from "@material-ui/core"
+import {
+  Card,
+  CardContent,
+  Checkbox,
+  makeStyles,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@material-ui/core"
+import MoreVertIcon from "@material-ui/icons/MoreVert"
 import clsx from "clsx"
 import { useObserver } from "mobx-react-lite"
 import React, { FC } from "react"
 import { useApollo, useUI } from "../../../di"
+import { RouterLink } from "../../el/link"
 import { TTheme } from "../../theme"
 import { useHomeContext } from "../home-ctx"
-import { GqlHomeUpdateTask } from "../home-query"
+import { GqlHomesUpdateTask } from "../home-query"
 import { WebHome_tasks } from "../types/WebHome"
 import {
-  WebUpdateTask,
-  WebUpdateTaskVariables,
-  WebUpdateTask_updateTask,
-} from "../types/WebUpdateTask"
+  WebHomeUpdateTask,
+  WebHomeUpdateTaskVariables,
+  WebHomeUpdateTask_updateTask,
+} from "../types/WebHomeUpdateTask"
 
 type THomeTaskItemProps = {
   task: WebHome_tasks
@@ -27,16 +37,17 @@ export const HomeTaskItem: FC<THomeTaskItemProps> = ({ task }) => {
   const checkBoxChange = async () => {
     ui.setLocker(true)
     try {
-      const r = await apollo.mutate<WebUpdateTask, WebUpdateTaskVariables>({
-        mutation: GqlHomeUpdateTask,
+      const r = await apollo.mutate<WebHomeUpdateTask, WebHomeUpdateTaskVariables>({
+        mutation: GqlHomesUpdateTask,
         variables: {
           id: task.id,
-          name: task.name,
           isDone: !task.isDone,
         },
       })
       if (r.data && r.data.updateTask) {
-        const tasks = r.data.updateTask.filter(item => item && item) as WebUpdateTask_updateTask[]
+        const tasks = r.data.updateTask.filter(
+          item => item && item
+        ) as WebHomeUpdateTask_updateTask[]
         tasks_model.setTasks(tasks)
       }
       ui.setLocker(false)
@@ -44,6 +55,16 @@ export const HomeTaskItem: FC<THomeTaskItemProps> = ({ task }) => {
       console.error(e)
       ui.setLocker(false)
     }
+  }
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
   }
 
   return useObserver(() => (
@@ -59,8 +80,22 @@ export const HomeTaskItem: FC<THomeTaskItemProps> = ({ task }) => {
         <Checkbox
           checked={task.isDone}
           onClick={checkBoxChange}
-          style={{ color: category?.color || "inherit" }}
+          style={category && category.color ? { color: category.color } : {}}
+          className={clsx(classes.checkbox, !category && classes.checkboxDefaultColor)}
         />
+        <MoreVertIcon
+          style={category && category.color ? { color: category.color } : {}}
+          className={classes.checkbox}
+          onClick={e => handleClick(e as any)}
+        />
+        <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+          <MenuItem>
+            <RouterLink to={"/task/" + task.id}>Edit</RouterLink>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <Typography>Delete</Typography>
+          </MenuItem>
+        </Menu>
       </CardContent>
     </Card>
   ))
@@ -68,7 +103,7 @@ export const HomeTaskItem: FC<THomeTaskItemProps> = ({ task }) => {
 HomeTaskItem.displayName = "HomeTaskItem"
 
 const useStyles = makeStyles<TTheme>(
-  _theme => {
+  theme => {
     return {
       root: {
         display: "grid",
@@ -80,11 +115,17 @@ const useStyles = makeStyles<TTheme>(
       },
       content: {
         display: "grid",
-        gridTemplateColumns: "1fr 20px",
+        gridTemplateColumns: "1fr 20px 25px",
         alignItems: "center",
       },
       decoration: {
         textDecoration: "line-through",
+      },
+      checkbox: {
+        justifySelf: "flex-end",
+      },
+      checkboxDefaultColor: {
+        color: theme.custom.colors.whiteBlack + " !important",
       },
     }
   },
