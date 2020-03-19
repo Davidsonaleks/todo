@@ -236,6 +236,12 @@ export const getTheme = (mode: TMode) => {
           },
         },
       },
+      MuiFab: {
+        root: {
+          width: "70px",
+          height: "70px",
+        },
+      },
     },
 
     //.MuiSelect-select:not([multiple]) option

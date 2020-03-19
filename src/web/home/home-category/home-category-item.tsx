@@ -1,4 +1,4 @@
-import { makeStyles, Typography } from "@material-ui/core"
+import { Fab, makeStyles, Typography } from "@material-ui/core"
 import AddIcon from "@material-ui/icons/Add"
 import React, { FC, useEffect, useState } from "react"
 import { CREATED_ID } from "../../../util/common"
@@ -19,7 +19,7 @@ export const HomeCategory: FC<THomeCategoryProps> = ({ category }) => {
 
   return (
     <div className={classes.root}>
-      <div
+      <Fab
         className={classes.category}
         style={category.color ? { background: category.color } : undefined}
         onClick={() => setPopup(true)}
@@ -27,33 +27,32 @@ export const HomeCategory: FC<THomeCategoryProps> = ({ category }) => {
         <Typography variant="body2" className={classes.name}>
           {category.id === CREATED_ID ? <AddIcon className={classes.plusIcon} /> : category.name}
         </Typography>
-      </div>
+      </Fab>
       <HomeCategoryForm isPopup={isPopup} setPopup={setPopup} category={category} />
     </div>
   )
 }
 HomeCategory.displayName = "HomeCategory"
 
-const size = 70
 const useHomeCategoryStyles = makeStyles<TTheme>(
   theme => {
     return {
       root: {
-        width: size + theme.custom.gap.innerPadding,
         paddingLeft: theme.custom.gap.innerPadding,
-        height: size,
         scrollSnapAlign: "start",
       },
       category: {
-        minWidth: size,
-        minHeight: size,
-        borderRadius: "50%",
         background: "#fff",
-        color: "#000",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        cursor: "pointer",
+        textTransform: "none",
+        transition: ".3s",
+        "&:hover": {
+          "&:not($name)": {
+            filter: "brightness(0.7)",
+          },
+        },
         "&:last-child": {
           position: "relative",
           "&:after": {
