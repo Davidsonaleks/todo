@@ -27,6 +27,6 @@ export interface WebHome_categories {
 }
 
 export interface WebHome {
-  tasks: (WebHome_tasks | null)[] | null;
+  tasks: WebHome_tasks[];
   categories: (WebHome_categories | null)[] | null;
 }

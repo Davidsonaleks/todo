@@ -117,7 +117,9 @@ export const HomeTaskItem: FC<THomeTaskItemProps> = ({ task }) => {
         />
         <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
           <MenuItem>
-            <RouterLink to={"/task/" + task.id}>Edit</RouterLink>
+            <RouterLink to={"/task/" + task.id} className={classes.link}>
+              Edit
+            </RouterLink>
           </MenuItem>
           <MenuItem
             onClick={() => {
@@ -158,6 +160,12 @@ const useStyles = makeStyles<TTheme>(
       },
       checkboxDefaultColor: {
         color: theme.custom.colors.whiteBlack + " !important",
+      },
+      link: {
+        display: "block",
+        width: "100%",
+        height: "100%",
+        textDecoration: "none",
       },
     }
   },

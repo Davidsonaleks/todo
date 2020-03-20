@@ -19,8 +19,8 @@ export const GqlTask = gql`
 `
 
 export const GqlTaskCreate = gql`
-  mutation WebAddTask($name: String!, $isDone: Boolean!) {
-    addNewTask(name: $name, isDone: $isDone) {
+  mutation WebAddTask($name: String!, $isDone: Boolean!, $category_id: ID) {
+    addNewTask(name: $name, isDone: $isDone, category_id: $category_id) {
       id
       name
       isDone

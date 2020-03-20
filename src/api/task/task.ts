@@ -8,6 +8,7 @@ import {
 import { GraphQLDateTime } from "graphql-iso-date"
 import { model, Schema } from "mongoose"
 import { TGraphQLObjectType } from "../../types"
+import { CREATED_ID } from "../../util/common"
 import { CategoryModel, CategorySchema } from "../category/category"
 
 export const TaskSchema: TGraphQLObjectType = new GraphQLObjectType({
@@ -35,3 +36,9 @@ const t = new Schema({
 })
 
 export const TaskModel = model("Task", t)
+
+export const defaultTask = {
+  id: CREATED_ID,
+  name: "",
+  isDone: false,
+}

@@ -27,7 +27,7 @@ export interface WebTask_categories {
 }
 
 export interface WebTask {
-  task: WebTask_task | null;
+  task: WebTask_task;
   categories: (WebTask_categories | null)[] | null;
 }
 

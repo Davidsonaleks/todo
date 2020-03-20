@@ -5,7 +5,7 @@ import { TaskModel, TaskSchema } from "./task"
 
 export const TaskMutation: TSchemaField = {
   addNewTask: {
-    type: GraphQLList(TaskSchema),
+    type: new GraphQLNonNull(TaskSchema),
     args: {
       name: { type: new GraphQLNonNull(GraphQLString) },
       isDone: { type: new GraphQLNonNull(GraphQLBoolean) },
@@ -22,20 +22,11 @@ export const TaskMutation: TSchemaField = {
         throw new ValidationError("not found")
       }
 
-      const tasks_list = TaskModel.find(
-        {},
-        null,
-        { sort: { isDone: false, createdAt: -1 } },
-        err => {
-          if (err) throw err
-        }
-      )
-
-      return tasks_list
+      return newTask
     },
   },
   removeTask: {
-    type: new GraphQLList(TaskSchema),
+    type: new GraphQLNonNull(GraphQLList(new GraphQLNonNull(TaskSchema))),
     args: {
       id: { type: new GraphQLNonNull(GraphQLID) },
     },

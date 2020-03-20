@@ -14,10 +14,11 @@ export interface WebAddTask_addNewTask {
 }
 
 export interface WebAddTask {
-  addNewTask: (WebAddTask_addNewTask | null)[] | null;
+  addNewTask: WebAddTask_addNewTask;
 }
 
 export interface WebAddTaskVariables {
   name: string;
   isDone: boolean;
+  category_id?: string | null;
 }

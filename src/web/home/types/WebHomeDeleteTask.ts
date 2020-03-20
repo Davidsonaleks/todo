@@ -20,7 +20,7 @@ export interface WebHomeDeleteTask_removeTask {
 }
 
 export interface WebHomeDeleteTask {
-  removeTask: (WebHomeDeleteTask_removeTask | null)[] | null;
+  removeTask: WebHomeDeleteTask_removeTask[];
 }
 
 export interface WebHomeDeleteTaskVariables {

@@ -11,7 +11,7 @@ export const HomeTasks: FC = () => {
   const classes = useStyles()
   const { tasks_model } = useHomeContext()
   return useObserver(() => (
-    <div className={classes.root}>
+    <div>
       <Typography variant="h2" color="primary" className={classes.title}>
         Tasks
       </Typography>
@@ -35,7 +35,6 @@ HomeTasks.displayName = "HomeTasks"
 const useStyles = makeStyles<TTheme>(
   theme => {
     return {
-      root: {},
       title: {
         margin: `${theme.spacing(2)}px 0`,
       },
