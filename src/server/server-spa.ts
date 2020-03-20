@@ -10,9 +10,10 @@ import fetch from "node-fetch"
 import { createElement } from "react"
 import { renderToString } from "react-dom/server"
 import { TDeps } from "../types"
+import { DarkThemeCookies } from "../util/common"
+import { WebUi } from "../util/user-interface"
 import { LayoutRoot } from "../web/layout-root"
 import { routes } from "../web/routes"
-import { userInterface } from "./../util/user-interface"
 import { onErrorLink } from "./apollo"
 
 const { WDS_PORT, DISABLE_SSR, GRAPHQL_PORT } = process.env
@@ -25,6 +26,10 @@ export const spa_middleware: Middleware = async (ctx, next) => {
     ctx.status = 200
     ctx.body = template({ html: "", statusCode: 200, css: "" })
   } else {
+    const isDarkTheme = JSON.parse(ctx.cookies.get(DarkThemeCookies) || "false")
+    const userInterface = new WebUi()
+    userInterface.setDarkTheme(isDarkTheme)
+
     const sheets = new ServerStyleSheets()
     const httpLink = createHttpLink({
       uri: graphql_uri,

@@ -8,9 +8,11 @@ import fetch from "node-fetch"
 import { FC } from "react"
 import { onErrorLink } from "../server/apollo"
 import { TDeps } from "../types"
+import { DarkThemeCookies } from "../util/common"
+import { WebUi } from "../util/user-interface"
 import { LayoutRoot } from "../web/layout-root"
 import { routes } from "../web/routes"
-import { userInterface } from "./../util/user-interface"
+import { getCookie } from "./cookies"
 
 const defaultOptions: DefaultOptions = {
   watchQuery: {
@@ -27,6 +29,11 @@ const init = () => {
     uri: (window as any).env.GRAPHQL_URL,
     fetch: fetch as any, // https://github.com/apollographql/apollo-client/issues/5367
   })
+
+  const userInterface = new WebUi()
+  const isDarkTheme = JSON.parse(getCookie(DarkThemeCookies) || "false")
+  userInterface.setDarkTheme(isDarkTheme)
+
   const apollo = new ApolloClient({
     link: ApolloLink.from([onErrorLink, httpLink]),
     cache: new InMemoryCache(),

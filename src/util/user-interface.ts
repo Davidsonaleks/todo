@@ -21,4 +21,3 @@ export class WebUi {
     this.headerTitle = str
   }
 }
-export const userInterface = new WebUi()

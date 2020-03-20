@@ -4,7 +4,9 @@ import MenuIcon from "@material-ui/icons/Menu"
 import clsx from "clsx"
 import { useObserver } from "mobx-react-lite"
 import React, { FC } from "react"
+import { setCookie } from "../../browser/cookies"
 import { useUI } from "../../di"
+import { DarkThemeCookies } from "../../util/common"
 import { PageInner } from "../el/page-inner"
 import { TTheme } from "../theme"
 
@@ -14,8 +16,9 @@ export const Header: FC = () => {
   const openMenu = () => {
     ui.setMobileMenu(true)
   }
-  const changeTheme = () => {
-    ui.setDarkTheme(!ui.isDarkTheme)
+  const changeTheme = (b: boolean) => {
+    ui.setDarkTheme(b)
+    setCookie(DarkThemeCookies, String(b), 365)
   }
   return useObserver(() => (
     <AppBar position="static">
@@ -27,7 +30,10 @@ export const Header: FC = () => {
               {ui.headerTitle}
             </Typography>
           </div>
-          <EmojiObjectsIcon className={classes.icon2} onClick={changeTheme} />
+          <EmojiObjectsIcon
+            className={classes.icon2}
+            onClick={() => changeTheme(!ui.isDarkTheme)}
+          />
         </PageInner>
       </Toolbar>
     </AppBar>
