@@ -1,3 +1,5 @@
 WDS_PORT=3000
 PORT=3001
 DISABLE_SSR=false
+GRAPHQL_PORT=3002
+MONGO_URL="mongodb+srv://<login>:<password>@cluster0-iervk.azure.mongodb.net/db"

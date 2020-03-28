@@ -16,8 +16,7 @@
     "noUnusedParameters": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2017",
-    "outDir": "dist"
+    "target": "es2017"
   },
   "exclude": ["dist"],
   "include": ["src"]

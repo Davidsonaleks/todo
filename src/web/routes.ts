@@ -1,9 +1,9 @@
 import { TRouteConfig } from "chyk"
 import { FC } from "react"
-import { Home } from "./home/home"
+import { Home, homeLoader } from "./home/home"
 import { Layout } from "./layout"
 import { NotFound } from "./not-found/not-found"
-import { NotHome } from "./not-home/not-home"
+import { taskLoader, TaskRoot } from "./task/task-root"
 
 export const routes: TRouteConfig[] = [
   {
@@ -13,11 +13,15 @@ export const routes: TRouteConfig[] = [
         path: "/",
         exact: true,
         component: Home as FC,
+        dataKey: "home",
+        loadData: homeLoader,
       },
       {
-        path: "/not-home",
+        path: "/task/:id",
         exact: true,
-        component: NotHome as FC,
+        component: TaskRoot as FC,
+        dataKey: "task",
+        loadData: taskLoader,
       },
       {
         component: NotFound as FC,
